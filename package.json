@@ -1,0 +1,46 @@
+{
+  "name": "air-book-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "test": "npx mocha --file tests/setup.mjs 'tests/**/*.test.mjs'",
+    "lint": "eslint .",
+    "doc": "jsdoc -c jsdoc.json"
+  },
+  "author": "Tomasz Szkaradek",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "chai": "^5.2.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.10",
+    "express": "*",
+    "fs": "^0.0.1-security",
+    "gelf-pro": "^1.3.10",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.0",
+    "neo4j-driver": "*",
+    "node-cron": "^4.0.7",
+    "nodemon": "^3.1.10",
+    "path": "^0.12.7",
+    "pg": "^8.8.0",
+    "prom-client": "^15.0.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.28.0",
+    "jsdoc": "^4.0.4",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3",
+    "typedoc": "^0.25.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

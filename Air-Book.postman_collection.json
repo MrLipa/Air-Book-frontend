@@ -1,0 +1,782 @@
+{
+	"info": {
+		"_postman_id": "7b3f4c51-abe0-41b7-abe2-f69a122a209d",
+		"name": "Air-Book",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19647940"
+	},
+	"item": [
+		{
+			"name": "healthCheck",
+			"item": [
+				{
+					"name": "/healthCheck/postgresHealth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/healthCheck/postgresHealth",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"healthCheck",
+								"postgresHealth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/healthCheck/neo4jHealth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/healthCheck/neo4jHealth",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"healthCheck",
+								"neo4jHealth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "register",
+			"item": [
+				{
+					"name": "/register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Anna\",\n  \"lastName\": \"Kowalska\",\n  \"email\": \"anna.kowalska@example.com\",\n  \"password\": \"StrongPass123!\",\n  \"role\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{BaseURL}}/register",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "/login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"anna.kowalska@example.com\",\n  \"password\": \"StrongPass123!\"\n}"
+						},
+						"url": {
+							"raw": "{{BaseURL}}/login",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "refresh_token",
+			"item": [
+				{
+					"name": "/refreshToken",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer dummy_refresh_token"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/refreshToken",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"refreshToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "logout",
+			"item": [
+				{
+					"name": "/logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/logout",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "/user/getAllUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/user/getAllUsers",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"user",
+								"getAllUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/getUserIdByEmail/:email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/user/getUserIdByEmail/anna.kowalska@example.com",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"user",
+								"getUserIdByEmail",
+								"anna.kowalska@example.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/getUserById/:userId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/user/getUserById/1",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"user",
+								"getUserById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/getNotificationsByUserId/:userId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/user/getNotificationsByUserId/1",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"user",
+								"getNotificationsByUserId",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/createNewUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"securepass123\",\n  \"phone\": \"123456789\",\n  \"image\": \" \",\n  \"address\": \"123 Main St\",\n  \"description\": \"Sample user\",\n  \"role\": \"none\"\n}"
+						},
+						"url": {
+							"raw": "{{BaseURL}}/user/createNewUser",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"user",
+								"createNewUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/updateUserById/:userId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"password\": \"newpass456\",\n  \"image\": \"new_image_url\",\n  \"phone\": \"987654321\",\n  \"address\": \"456 Elm St\",\n  \"description\": \"Updated description\",\n  \"role\": \"user\"\n}"
+						},
+						"url": {
+							"raw": "{{BaseURL}}/user/updateUserById/3",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"user",
+								"updateUserById",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/patchUserById/:userId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{BaseURL}}/user/patchUserById/3",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"user",
+								"patchUserById",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/deleteUserById/:userId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/user/deleteUserById/3",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"user",
+								"deleteUserById",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/createNotification",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 1,\n  \"message\": \"Your flight has been updated.\"\n}"
+						},
+						"url": {
+							"raw": "{{BaseURL}}/user/createNotification",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"user",
+								"createNotification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/createReservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer dummy_token"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 1,\n  \"flightId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{BaseURL}}/user/createReservation",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"user",
+								"createReservation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/deleteReservationById/:reservationId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer dummy_token"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/user/deleteReservationById/6",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"user",
+								"deleteReservationById",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "airport",
+			"item": [
+				{
+					"name": "/airport/getAllAirports",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/airport/getAllAirports",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"airport",
+								"getAllAirports"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "flight",
+			"item": [
+				{
+					"name": "/flight/getAllFlights",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/flight/getAllFlights",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"flight",
+								"getAllFlights"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/flight/searchFlights",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cityFrom\": \"\",\n  \"cityTo\": \"Shanghai\"\n}"
+						},
+						"url": {
+							"raw": "{{BaseURL}}/flight/searchFlights",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"flight",
+								"searchFlights"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/flight/getFlightsByIds",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightIds\": [1, 1, 2, 3]\n}"
+						},
+						"url": {
+							"raw": "{{BaseURL}}/flight/getFlightsByIds",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"flight",
+								"getFlightsByIds"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/flight/getFlightsByUserId/:userId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer dummy_token"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/flight/getFlightsByUserId/1",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"flight",
+								"getFlightsByUserId",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/flight/patchFlightById/flightId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"freeSeats\": 13\n}"
+						},
+						"url": {
+							"raw": "{{BaseURL}}/flight/patchFlightById/1",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"flight",
+								"patchFlightById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseURL",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "Token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2luZm8iOnsidXNlcl9pZCI6MSwiZW1haWwiOiJ4YXZpZXJAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTc0ODE5NTkzNCwiZXhwIjoxNzQ5NTA5OTM0fQ.TXpqlnecnH-gEX3Sh8TnbT7Q47VvLEKrNWDw4vm7uX8",
+			"type": "string"
+		}
+	]
+}
