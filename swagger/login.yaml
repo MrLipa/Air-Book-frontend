@@ -1,0 +1,26 @@
+post:
+  tags:
+    - Auth
+  summary: Log in a user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+              format: email
+              example: anna.kowalska@example.com
+            password:
+              type: string
+              example: StrongPass123!
+  responses:
+    '200':
+      description: Logged in successfully
+    '401':
+      description: Invalid email or password

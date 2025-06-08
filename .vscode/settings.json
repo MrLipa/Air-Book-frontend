@@ -1,14 +1,18 @@
 {
-  "eslint.validate": ["javascript"],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   "eslint.experimental.useFlatConfig": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": true
   },
-
-  // === Custom editor settings ===
-  "editor.fontSize": 13,                   // Font size set to 13
-  "editor.tabSize": 4,                     // Tab size set to 4 spaces
-  "files.autoSave": "afterDelay",          // Auto-save after delay
-  "files.autoSaveDelay": 1000,             // Delay in ms (default is 1000)
-  "editor.wordWrap": "on"                  // Wrap long lines automatically
+  "editor.formatOnSave": true,
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.folders.associations": {
+    "swagger": "api",
+  },
+  "editor.fontSize": 13,
+  "editor.tabSize": 4,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "editor.wordWrap": "on",
+  "editor.fontWeight": "normal"
 }

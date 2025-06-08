@@ -52,6 +52,7 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false, limit: '50mb' }));
 app.use(express.json({ limit: '50mb' }));
 app.use(cookieParser());
+app.use('/api-docs', express.static(path.join(process.cwd(), 'swagger')));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // === Monitoring Logging ===

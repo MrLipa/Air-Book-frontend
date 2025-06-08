@@ -1,0 +1,9 @@
+getAllAirports:
+  get:
+    tags: [Airport]
+    summary: Get all airports
+    security:
+      - bearerAuth: []
+    responses:
+      '200':
+        description: List of airports
