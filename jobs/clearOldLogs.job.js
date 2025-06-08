@@ -5,7 +5,7 @@ const clearOldLogs = () => {
   const logDir = path.join(__dirname, '..', 'logs');
   console.log(`Starting to clear old logs in directory: ${logDir}`);
   fs.readdir(logDir, (err, files) => {
-    files.forEach(file => {
+    files.forEach((file) => {
       const filePath = path.join(logDir, file);
       const fileStats = fs.statSync(filePath);
       const currentTime = Date.now();

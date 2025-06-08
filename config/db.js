@@ -1,6 +1,6 @@
-const neo4j = require("neo4j-driver");
-const Pool = require("pg").Pool;
-require('dotenv').config()
+const neo4j = require('neo4j-driver');
+const Pool = require('pg').Pool;
+require('dotenv').config();
 
 const pool = new Pool({
   user: process.env.POSTGRES_DB_USERNAME,
@@ -9,8 +9,8 @@ const pool = new Pool({
   port: process.env.POSTGRES_DB_PORT,
   database: process.env.POSTGRES_DB_DATABASE,
   ssl: {
-    rejectUnauthorized: false
-  }
+    rejectUnauthorized: false,
+  },
 });
 
 const { NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD } = process.env;

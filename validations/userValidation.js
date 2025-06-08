@@ -8,7 +8,7 @@ const registerSchema = Joi.object({
   password: Joi.string().min(8).required(),
   role: Joi.string()
     .valid(...Object.values(ROLES_LIST))
-    .default(ROLES_LIST.User)
+    .default(ROLES_LIST.User),
 });
 
 module.exports = { registerSchema };

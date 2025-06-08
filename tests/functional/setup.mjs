@@ -20,7 +20,7 @@ before(async function () {
   const cypher = fs.readFileSync(cypherPath, 'utf8');
   const statements = cypher
     .split(/;\s*\n/)
-    .map(line => line.trim())
+    .map((line) => line.trim())
     .filter(Boolean);
 
   for (const stmt of statements) {
@@ -29,7 +29,6 @@ before(async function () {
 
   console.log('[SETUP] ✅ Neo4j schema + data loaded');
 });
-
 
 after(async function () {
   this.timeout(10000);
@@ -45,7 +44,7 @@ after(async function () {
   const cypher = fs.readFileSync(cypherPath, 'utf8');
   const statements = cypher
     .split(/;\s*\n/)
-    .map(line => line.trim())
+    .map((line) => line.trim())
     .filter(Boolean);
 
   for (const stmt of statements) {

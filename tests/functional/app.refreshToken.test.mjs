@@ -15,24 +15,26 @@ describe('GET /refreshToken', () => {
       userInfo: {
         userId,
         email: 'xavier@gmail.com',
-        role: 'admin'
-      }
+        role: 'admin',
+      },
     };
 
     refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRY || '7d'
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRY || '7d',
     });
 
-    await pool.query(
-      'INSERT INTO air_book.user_tokens (user_id, refresh_token) VALUES ($1, $2)',
-      [userId, refreshToken]
-    );
+    await pool.query('INSERT INTO air_book.user_tokens (user_id, refresh_token) VALUES ($1, $2)', [
+      userId,
+      refreshToken,
+    ]);
   });
 
   after(async () => {
     try {
       if (refreshToken) {
-        await pool.query('DELETE FROM air_book.user_tokens WHERE refresh_token = $1', [refreshToken]);
+        await pool.query('DELETE FROM air_book.user_tokens WHERE refresh_token = $1', [
+          refreshToken,
+        ]);
       }
     } catch (err) {
       console.error('[AFTER] Cleanup error:', err.message);
@@ -56,9 +58,7 @@ describe('GET /refreshToken', () => {
   });
 
   it('❌ should return 403 if token is invalid', async () => {
-    const res = await request(app)
-      .get('/refreshToken')
-      .set('Cookie', ['jwt=invalid_token_value']);
+    const res = await request(app).get('/refreshToken').set('Cookie', ['jwt=invalid_token_value']);
 
     expect(res.status).to.equal(403);
   });
@@ -68,12 +68,12 @@ describe('GET /refreshToken', () => {
       userInfo: {
         userId: 9999999,
         email: 'nonexistent@example.com',
-        role: 'user'
-      }
+        role: 'user',
+      },
     };
 
     const fakeToken = jwt.sign(fakePayload, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: '1h'
+      expiresIn: '1h',
     });
 
     const res = await request(app)

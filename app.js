@@ -1,5 +1,8 @@
 // Core modules & packages
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const yaml = require('yamljs');
+const swaggerDocument = yaml.load('./swagger/swagger.yaml');
 const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -49,6 +52,7 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false, limit: '50mb' }));
 app.use(express.json({ limit: '50mb' }));
 app.use(cookieParser());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // === Monitoring Logging ===
 app.use((req, res, next) => {

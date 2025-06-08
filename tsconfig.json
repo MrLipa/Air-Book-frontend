@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "outDir": "./dist"
+  },
+  "include": ["config", "controllers", "routes", "utils", "validations"],
+  "exclude": ["node_modules", "dist", "docs"]
+}

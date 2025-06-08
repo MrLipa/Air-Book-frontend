@@ -1,6 +1,6 @@
-const bcrypt = require("bcrypt");
-const { pool } = require("../config/db");
-const { registerSchema } = require("../validations/userValidation");
+const bcrypt = require('bcrypt');
+const { pool } = require('../config/db');
+const { registerSchema } = require('../validations/userValidation');
 
 const registerNewUser = async (req, res) => {
   try {
@@ -12,13 +12,10 @@ const registerNewUser = async (req, res) => {
 
     const { firstName, lastName, email, password, role } = value;
 
-    const existingUser = await pool.query(
-      "SELECT 1 FROM air_book.users WHERE email = $1",
-      [email]
-    );
+    const existingUser = await pool.query('SELECT 1 FROM air_book.users WHERE email = $1', [email]);
 
     if (existingUser.rowCount > 0) {
-      return res.status(409).json({ message: "User with this email already exists." });
+      return res.status(409).json({ message: 'User with this email already exists.' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -30,7 +27,6 @@ const registerNewUser = async (req, res) => {
     );
 
     res.status(201).json({ message: `✅ User '${email}' successfully registered.` });
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

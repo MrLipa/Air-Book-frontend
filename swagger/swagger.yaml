@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+  title: Air-Book API
+  version: 1.0.0
+  description: Dokumentacja API systemu rezerwacji lotów
+
+servers:
+  - url: http://localhost:3000
+    description: Lokalny serwer developerski
+
+paths:
+  /airport/getAllAirports:
+    get:
+      summary: Pobierz wszystkie lotniska
+      tags:
+        - Airport
+      responses:
+        '200':
+          description: Lista lotnisk

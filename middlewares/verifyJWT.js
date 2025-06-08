@@ -2,15 +2,12 @@ const jwt = require('jsonwebtoken');
 const allowedRoutes = require('./../config/allowedRoutes');
 require('dotenv').config();
 
-
 const verifyJwt = (req, res, next) => {
   const { authorization } = req.headers;
   const { originalUrl, method } = req;
 
   const isExcluded = allowedRoutes.some(
-    route =>
-      route.path === originalUrl &&
-      route.method.toUpperCase() === method.toUpperCase()
+    (route) => route.path === originalUrl && route.method.toUpperCase() === method.toUpperCase()
   );
 
   if (isExcluded) {

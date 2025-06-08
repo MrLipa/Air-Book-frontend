@@ -9,7 +9,7 @@ describe('GET /logout', () => {
   const userId = 1;
   const testUser = {
     email: 'xavier@gmail.com',
-    role: 'admin'
+    role: 'admin',
   };
 
   before(async () => {
@@ -17,26 +17,23 @@ describe('GET /logout', () => {
       userInfo: {
         userId,
         email: testUser.email,
-        role: testUser.role
-      }
+        role: testUser.role,
+      },
     };
 
     refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRY || '7d'
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRY || '7d',
     });
 
-    await pool.query(
-      'INSERT INTO air_book.user_tokens (user_id, refresh_token) VALUES ($1, $2)',
-      [userId, refreshToken]
-    );
+    await pool.query('INSERT INTO air_book.user_tokens (user_id, refresh_token) VALUES ($1, $2)', [
+      userId,
+      refreshToken,
+    ]);
   });
 
   after(async () => {
     try {
-      await pool.query(
-        'DELETE FROM air_book.user_tokens WHERE refresh_token = $1',
-        [refreshToken]
-      );
+      await pool.query('DELETE FROM air_book.user_tokens WHERE refresh_token = $1', [refreshToken]);
     } catch (err) {
       console.error('[AFTER] Cleanup error:', err.message);
     }
@@ -59,9 +56,7 @@ describe('GET /logout', () => {
   });
 
   it('❌ should return 403 if token is malformed', async () => {
-    const res = await request(app)
-      .get('/logout')
-      .set('Cookie', ['jwt=invalid_token_value']);
+    const res = await request(app).get('/logout').set('Cookie', ['jwt=invalid_token_value']);
 
     expect(res.status).to.equal(403);
   });

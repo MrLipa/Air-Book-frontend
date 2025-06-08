@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
-const { pool } = require("../config/db");
-require("dotenv").config();
+const jwt = require('jsonwebtoken');
+const { pool } = require('../config/db');
+require('dotenv').config();
 
 const refreshToken = async (req, res) => {
   const cookies = req.cookies;
@@ -19,7 +19,7 @@ const refreshToken = async (req, res) => {
     );
 
     if (foundUser.rows.length === 0) {
-      return res.status(403).json({ message: "User not found" });
+      return res.status(403).json({ message: 'User not found' });
     }
 
     const user = foundUser.rows[0];
@@ -29,8 +29,8 @@ const refreshToken = async (req, res) => {
         userInfo: {
           userId: user.user_id,
           email: user.email,
-          role: user.role
-        }
+          role: user.role,
+        },
       },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
@@ -39,7 +39,7 @@ const refreshToken = async (req, res) => {
     res.json({
       accessToken: newAccessToken,
       userId: user.user_id,
-      role: user.role
+      role: user.role,
     });
   });
 };

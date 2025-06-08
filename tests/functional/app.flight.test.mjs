@@ -29,18 +29,14 @@ describe('Flight Routes', () => {
 
   describe('POST /flight/searchFlights', () => {
     it('should return flights from a city', async () => {
-      const res = await request(app)
-        .post('/flight/searchFlights')
-        .send({ cityFrom: 'Warsaw' });
+      const res = await request(app).post('/flight/searchFlights').send({ cityFrom: 'Warsaw' });
 
       expect(res.status).to.equal(200);
       expect(res.body).to.be.an('array');
     });
 
     it('should return flights to a city', async () => {
-      const res = await request(app)
-        .post('/flight/searchFlights')
-        .send({ cityTo: 'London' });
+      const res = await request(app).post('/flight/searchFlights').send({ cityTo: 'London' });
 
       expect(res.status).to.equal(200);
     });

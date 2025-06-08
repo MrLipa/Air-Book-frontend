@@ -1,5 +1,5 @@
-const { pool, session } = require("../config/db");
-require("dotenv").config();
+const { pool, session } = require('../config/db');
+require('dotenv').config();
 
 const getAllFlights = async (req, res) => {
   try {
@@ -8,20 +8,20 @@ const getAllFlights = async (req, res) => {
     );
 
     const flights = result.records.map((record) => ({
-      flightId: record.get("r.flight_id").low,
-      originCountry: record.get("a.country"),
-      originCity: record.get("a.city"),
-      originImage: record.get("a.image"),
-      destinationCountry: record.get("b.country"),
-      destinationCity: record.get("b.city"),
-      destinationImage: record.get("b.image"),
-      distance: record.get("r.distance").low,
-      date: record.get("r.date"),
-      price: record.get("r.price").low,
-      duration: record.get("r.duration"),
-      airlines: record.get("r.airlines"),
-      flightClass: record.get("r.class"),
-      freeSeats: record.get("r.free_seats").low,
+      flightId: record.get('r.flight_id').low,
+      originCountry: record.get('a.country'),
+      originCity: record.get('a.city'),
+      originImage: record.get('a.image'),
+      destinationCountry: record.get('b.country'),
+      destinationCity: record.get('b.city'),
+      destinationImage: record.get('b.image'),
+      distance: record.get('r.distance').low,
+      date: record.get('r.date'),
+      price: record.get('r.price').low,
+      duration: record.get('r.duration'),
+      airlines: record.get('r.airlines'),
+      flightClass: record.get('r.class'),
+      freeSeats: record.get('r.free_seats').low,
     }));
 
     res.status(200).json(flights);
@@ -32,10 +32,10 @@ const getAllFlights = async (req, res) => {
 
 const searchFlights = async (req, res) => {
   try {
-    const cityFrom = req.body.cityFrom || "";
-    const cityTo = req.body.cityTo || "";
+    const cityFrom = req.body.cityFrom || '';
+    const cityTo = req.body.cityTo || '';
 
-    let query = "";
+    let query = '';
     let parameters = {};
 
     if (!cityFrom && !cityTo) {
@@ -69,20 +69,20 @@ const searchFlights = async (req, res) => {
     const result = await session.run(query, parameters);
 
     const flights = result.records.map((record) => ({
-      flightId: record.get("r.flight_id").low,
-      originCountry: record.get("a.country"),
-      originCity: record.get("a.city"),
-      originImage: record.get("a.image"),
-      destinationCountry: record.get("b.country"),
-      destinationCity: record.get("b.city"),
-      destinationImage: record.get("b.image"),
-      distance: record.get("r.distance").low,
-      date: record.get("r.date"),
-      price: record.get("r.price").low,
-      duration: record.get("r.duration"),
-      airlines: record.get("r.airlines"),
-      flightClass: record.get("r.class"),
-      freeSeats: record.get("r.free_seats").low,
+      flightId: record.get('r.flight_id').low,
+      originCountry: record.get('a.country'),
+      originCity: record.get('a.city'),
+      originImage: record.get('a.image'),
+      destinationCountry: record.get('b.country'),
+      destinationCity: record.get('b.city'),
+      destinationImage: record.get('b.image'),
+      distance: record.get('r.distance').low,
+      date: record.get('r.date'),
+      price: record.get('r.price').low,
+      duration: record.get('r.duration'),
+      airlines: record.get('r.airlines'),
+      flightClass: record.get('r.class'),
+      freeSeats: record.get('r.free_seats').low,
     }));
 
     res.status(200).json(flights);
@@ -103,20 +103,20 @@ const getFlightsByIds = async (req, res) => {
     );
 
     const flights = result.records.map((record) => ({
-      flightId: record.get("r.flight_id").low,
-      originCountry: record.get("a.country"),
-      originCity: record.get("a.city"),
-      originImage: record.get("a.image"),
-      destinationCountry: record.get("b.country"),
-      destinationCity: record.get("b.city"),
-      destinationImage: record.get("b.image"),
-      distance: record.get("r.distance").low,
-      date: record.get("r.date"),
-      price: record.get("r.price").low,
-      duration: record.get("r.duration"),
-      airlines: record.get("r.airlines"),
-      flightClass: record.get("r.class"),
-      freeSeats: record.get("r.free_seats").low,
+      flightId: record.get('r.flight_id').low,
+      originCountry: record.get('a.country'),
+      originCity: record.get('a.city'),
+      originImage: record.get('a.image'),
+      destinationCountry: record.get('b.country'),
+      destinationCity: record.get('b.city'),
+      destinationImage: record.get('b.image'),
+      distance: record.get('r.distance').low,
+      date: record.get('r.date'),
+      price: record.get('r.price').low,
+      duration: record.get('r.duration'),
+      airlines: record.get('r.airlines'),
+      flightClass: record.get('r.class'),
+      freeSeats: record.get('r.free_seats').low,
     }));
 
     res.status(200).json(flights);
@@ -129,7 +129,7 @@ const getFlightsByUserId = async (req, res) => {
   try {
     const userId = parseInt(req.params.userId, 10);
     if (isNaN(userId)) {
-      return res.status(400).json({ message: "Invalid userId" });
+      return res.status(400).json({ message: 'Invalid userId' });
     }
 
     const dbResult = await pool.query(
@@ -144,7 +144,7 @@ const getFlightsByUserId = async (req, res) => {
     }
 
     const reservations = dbResult.rows;
-    const flightIds = [...new Set(reservations.map(r => r.flight_id))];
+    const flightIds = [...new Set(reservations.map((r) => r.flight_id))];
 
     const result = await session.run(
       `MATCH (a:Airport)-[r:Flight]->(b:Airport) 
@@ -155,22 +155,22 @@ const getFlightsByUserId = async (req, res) => {
 
     const flightsMap = {};
     for (const record of result.records) {
-      const flightId = record.get("id")?.low ?? record.get("id");
+      const flightId = record.get('id')?.low ?? record.get('id');
       flightsMap[flightId] = {
         flightId,
-        originCountry: record.get("origin_country"),
-        originCity: record.get("origin_city"),
-        originImage: record.get("origin_image"),
-        destinationCountry: record.get("destination_country"),
-        destinationCity: record.get("destination_city"),
-        destinationImage: record.get("destination_image"),
-        distance: record.get("distance")?.low ?? record.get("distance"),
-        date: record.get("date"),
-        price: record.get("price")?.low ?? record.get("price"),
-        duration: record.get("duration"),
-        airlines: record.get("airlines"),
-        flightClass: record.get("class"),
-        freeSeats: record.get("free_seats")?.low ?? record.get("free_seats"),
+        originCountry: record.get('origin_country'),
+        originCity: record.get('origin_city'),
+        originImage: record.get('origin_image'),
+        destinationCountry: record.get('destination_country'),
+        destinationCity: record.get('destination_city'),
+        destinationImage: record.get('destination_image'),
+        distance: record.get('distance')?.low ?? record.get('distance'),
+        date: record.get('date'),
+        price: record.get('price')?.low ?? record.get('price'),
+        duration: record.get('duration'),
+        airlines: record.get('airlines'),
+        flightClass: record.get('class'),
+        freeSeats: record.get('free_seats')?.low ?? record.get('free_seats'),
       };
     }
 
@@ -185,14 +185,12 @@ const getFlightsByUserId = async (req, res) => {
   }
 };
 
-
 const patchFlightById = async (req, res) => {
   try {
     const flightId = parseInt(req.params.flightId);
     const updateFields = req.body;
 
-    const camelToSnake = (str) =>
-      str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
+    const camelToSnake = (str) => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
 
     let cypherQuery = `MATCH (a:Airport)-[r:Flight]->(b:Airport) WHERE r.flight_id = $flight_id SET `;
     const params = { flight_id: flightId };
@@ -208,16 +206,15 @@ const patchFlightById = async (req, res) => {
     });
 
     cypherQuery = cypherQuery.slice(0, -2);
-    cypherQuery += " RETURN r";
+    cypherQuery += ' RETURN r';
 
     await session.run(cypherQuery, params);
 
-    res.status(200).json({ message: "Flight updated" });
+    res.status(200).json({ message: 'Flight updated' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 module.exports = {
   getAllFlights,

@@ -1,0 +1,26 @@
+{
+  "recommendations": [
+    // === Node.js & Web Development ===
+    "dbaeumer.vscode-eslint",                // ESLint
+    "esbenp.prettier-vscode",                // Prettier
+    "xabikos.javascriptsnippets",            // JavaScript ES6 Snippets
+    "formulahendry.auto-close-tag",          // Automatically close HTML/JSX tags
+    "formulahendry.auto-rename-tag",         // Automatically rename paired HTML/JSX tags
+    "ecmel.vscode-html-css",                 // HTML/CSS IntelliSense
+    "eg2.vscode-npm-script",                 // npm script IntelliSense
+    "orta.vscode-jest",                      // Jest test runner
+    "humao.rest-client",                     // REST Client (for testing APIs)
+    "mikestead.dotenv",                      // Support for .env files
+    "ms-azuretools.vscode-docker",           // Docker support
+    "ms-vscode-remote.remote-containers",    // Dev Containers support
+    "redhat.vscode-yaml",                    // YAML support
+
+    // === Python Development ===
+    "ms-python.python",                      // Python support
+    "ms-python.vscode-pylance",              // Pylance (IntelliSense for Python)
+    "ms-python.debugpy",                     // Python debugger
+    "donjayamanne.python-environment-manager", // Python Environment Manager
+    "njpwerner.autodocstring",               // Auto-generate Python docstrings
+    "ms-vscode-remote.remote-wsl"            // WSL support
+  ]
+}

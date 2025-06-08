@@ -4,11 +4,11 @@ import app from '../app.js';
 
 describe('POST /register', () => {
   const userData = {
-    firstName: "Anna",
-    lastName: "Kowalska",
-    email: "anna.kowalska@example.com",
-    password: "StrongPass123!",
-    role: "admin"
+    firstName: 'Anna',
+    lastName: 'Kowalska',
+    email: 'anna.kowalska@example.com',
+    password: 'StrongPass123!',
+    role: 'admin',
   };
 
   it('✅ should register a new user and return 201', async () => {
@@ -26,7 +26,7 @@ describe('POST /register', () => {
   it('❌ should return 400 if fields are missing', async () => {
     const res = await request(app).post('/register').send({
       email: 'missing@example.com',
-      password: 'Test123!'
+      password: 'Test123!',
     });
     expect(res.status).to.equal(400);
     expect(res.body.message).to.include('"firstName" is required'); // zakładamy, że używasz Joi lub podobnej walidacji

@@ -38,9 +38,7 @@ describe('GET /airport/getAllAirports', () => {
   });
 
   it('should return 403 if no token is provided', async () => {
-    const response = await request(app)
-      .get('/airport/getAllAirports')
-      .expect(403);
+    const response = await request(app).get('/airport/getAllAirports').expect(403);
 
     expect(response.body).to.have.property('message', 'Missing or malformed token');
   });

@@ -1,0 +1,14 @@
+{
+  "eslint.validate": ["javascript"],
+  "eslint.experimental.useFlatConfig": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // === Custom editor settings ===
+  "editor.fontSize": 13,                   // Font size set to 13
+  "editor.tabSize": 4,                     // Tab size set to 4 spaces
+  "files.autoSave": "afterDelay",          // Auto-save after delay
+  "files.autoSaveDelay": 1000,             // Delay in ms (default is 1000)
+  "editor.wordWrap": "on"                  // Wrap long lines automatically
+}

@@ -17,7 +17,6 @@ const userToken = generateAccessToken({
 });
 
 describe('User endpoints', () => {
-
   describe('GET /user/getAllUsers', () => {
     it('should return a list of users for admin', async () => {
       const res = await request(app)
@@ -71,14 +70,14 @@ describe('User endpoints', () => {
 
   describe('POST /user/createNewUser', () => {
     const newUser = {
-      firstName: "Alice",
-      lastName: "Smith",
-      email: "alice.smith@example.com",
-      password: "securePass456",
-      image: "avatar.jpg",
-      phone: "987654321",
-      address: "456 Avenue",
-      description: "test user for endpoints"
+      firstName: 'Alice',
+      lastName: 'Smith',
+      email: 'alice.smith@example.com',
+      password: 'securePass456',
+      image: 'avatar.jpg',
+      phone: '987654321',
+      address: '456 Avenue',
+      description: 'test user for endpoints',
     };
 
     it('should create a new user', async () => {
@@ -105,15 +104,15 @@ describe('User endpoints', () => {
   describe('PUT /user/updateUserById/:userId', () => {
     it('should update user details', async () => {
       const updated = {
-        firstName: "Updated",
-        lastName: "User",
-        email: "updated@example.com",
-        password: "newpass",
-        image: "img.jpg",
-        phone: "987654321",
-        address: "Updated Street",
-        description: "Updated desc",
-        role: "user"
+        firstName: 'Updated',
+        lastName: 'User',
+        email: 'updated@example.com',
+        password: 'newpass',
+        image: 'img.jpg',
+        phone: '987654321',
+        address: 'Updated Street',
+        description: 'Updated desc',
+        role: 'user',
       };
       const res = await request(app)
         .put('/user/updateUserById/2')
@@ -137,7 +136,7 @@ describe('User endpoints', () => {
       await request(app)
         .patch('/user/patchUserById/2')
         .set('Authorization', `Bearer ${adminToken}`)
-        .send({ description: "patched" })
+        .send({ description: 'patched' })
         .expect(200);
     });
 
@@ -172,7 +171,7 @@ describe('User endpoints', () => {
       const res = await request(app)
         .post('/user/createNotification')
         .set('Authorization', `Bearer ${adminToken}`)
-        .send({ userId: 1, message: "Hello" })
+        .send({ userId: 1, message: 'Hello' })
         .expect(201);
       expect(res.body).to.have.property('notification');
     });
@@ -230,5 +229,4 @@ describe('User endpoints', () => {
         .expect(400);
     });
   });
-
 });
