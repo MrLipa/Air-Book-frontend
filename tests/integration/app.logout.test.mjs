@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { expect } from 'chai';
 import jwt from 'jsonwebtoken';
-import app from '../app.js';
-import { pool } from '../config/db.js';
+import app from '../../app.js';
+import { pool } from '../../config/db.js';
 
 describe('GET /logout', () => {
   let refreshToken;

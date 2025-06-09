@@ -20,7 +20,7 @@ paths:
     $ref: './login.yaml'
 
   /refreshToken:
-    $ref: './refreshToken.yamlt'
+    $ref: './refreshToken.yaml'
 
   /logout:
     $ref: './logout.yaml'

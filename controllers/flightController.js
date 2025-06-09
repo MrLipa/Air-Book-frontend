@@ -3,9 +3,7 @@ require('dotenv').config();
 
 const getAllFlights = async (req, res) => {
   try {
-    const result = await session.run(
-      `MATCH (a:Airport)-[r:Flight]->(b:Airport) RETURN r.flight_id, a.country, a.city, a.image, b.country, b.city, b.image, r.distance, r.date, r.price, r.duration, r.airlines, r.class, r.free_seats`
-    );
+    const result = await session.run(`MATCH (a:Airport)-[r:Flight]->(b:Airport) RETURN r.flight_id, a.country, a.city, a.image, b.country, b.city, b.image, r.distance, r.date, r.price, r.duration, r.airlines, r.class, r.free_seats`);
 
     const flights = result.records.map((record) => ({
       flightId: record.get('r.flight_id').low,

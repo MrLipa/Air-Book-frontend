@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { expect } from 'chai';
-import app from '../app.js';
-import pkg from '../utils/generateToken.js';
+import app from '../../app.js';
+import pkg from '../../utils/generateToken.js';
 const { generateAccessToken } = pkg;
 
 const adminToken = generateAccessToken({

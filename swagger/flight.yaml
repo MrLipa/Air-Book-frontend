@@ -21,10 +21,10 @@ searchFlights:
             properties:
               cityFrom:
                 type: string
-                example: "Warsaw"
+                example: "Atlanta"
               cityTo:
                 type: string
-                example: "Paris"
+                example: "Dallas"
     responses:
       '200':
         description: List of matching flights

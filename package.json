@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "test": "npx mocha --file tests/setup.mjs 'tests/**/*.test.mjs'",
+    "test:integra": "npx mocha --file tests/integration/setup.mjs 'tests/integration/**/*.test.mjs' --reporter mochawesome --reporter-options reportDir=logs,reportFilename=test-report",
+    "test:performance": "k6 run tests/performance/airport-test.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write 'config/**/*.{js,ts,mjs,cjs}' 'controllers/**/*.{js,ts,mjs,cjs}' 'routes/**/*.{js,ts,mjs,cjs}' 'utils/**/*.{js,ts,mjs,cjs}' 'validations/**/*.{js,ts,mjs,cjs}'",
@@ -45,7 +46,9 @@
     "eslint-plugin-prettier": "^5.4.1",
     "globals": "^16.2.0",
     "jsdoc": "^4.0.4",
+    "k6-html-reporter": "^1.0.5",
     "mocha": "^10.2.0",
+    "mochawesome": "^7.1.3",
     "prettier": "^3.5.3",
     "supertest": "^6.3.3",
     "typedoc": "^0.28.5"

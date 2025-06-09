@@ -25,9 +25,7 @@ const getAllUsers = async (req, res) => {
 const getUserIdByEmail = async (req, res) => {
   try {
     const email = req.params.email;
-    const userQuery = await pool.query('SELECT user_id FROM air_book.users WHERE email = $1', [
-      email,
-    ]);
+    const userQuery = await pool.query('SELECT user_id FROM air_book.users WHERE email = $1', [email]);
     if (userQuery.rows.length > 0) {
       res.json({ userId: userQuery.rows[0].user_id });
     } else {
@@ -67,17 +65,7 @@ const getUserById = async (req, res) => {
 
 const createNewUser = async (req, res) => {
   try {
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      image,
-      phone,
-      address,
-      description,
-      role = 'none',
-    } = req.body;
+    const { firstName, lastName, email, password, image, phone, address, description, role = 'none' } = req.body;
 
     if (!firstName || !lastName || !email || !password || !image || !phone || !address) {
       return res.status(400).json({
@@ -106,18 +94,13 @@ const createNewUser = async (req, res) => {
 const updateUserById = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const { firstName, lastName, email, password, image, phone, address, description, role } =
-      req.body;
+    const { firstName, lastName, email, password, image, phone, address, description, role } = req.body;
 
     const requiredFields = { firstName, lastName, email, password, image, phone, address };
-    const missingFields = Object.entries(requiredFields).filter(
-      ([_, val]) => val === null || val === undefined || val === ''
-    );
+    const missingFields = Object.entries(requiredFields).filter(([_, val]) => val === null || val === undefined || val === '');
 
     if (missingFields.length > 0) {
-      return res
-        .status(400)
-        .json({ message: 'All required fields must be provided and not empty.' });
+      return res.status(400).json({ message: 'All required fields must be provided and not empty.' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -128,18 +111,7 @@ const updateUserById = async (req, res) => {
       RETURNING *
     `;
 
-    const values = [
-      firstName,
-      lastName,
-      email,
-      hashedPassword,
-      image,
-      phone,
-      address,
-      description,
-      role,
-      userId,
-    ];
+    const values = [firstName, lastName, email, hashedPassword, image, phone, address, description, role, userId];
 
     const result = await pool.query(query, values);
     res.status(200).json({ message: 'User updated', userId: result.rows[0].user_id });
@@ -166,9 +138,7 @@ const patchUserById = async (req, res) => {
     };
 
     const entries = Object.entries(updateFields)
-      .filter(
-        ([key, value]) => fieldMap[key] && value !== null && value !== undefined && value !== ''
-      )
+      .filter(([key, value]) => fieldMap[key] && value !== null && value !== undefined && value !== '')
       .map(([key, value]) => [fieldMap[key], value]);
 
     if (!entries.length) {
@@ -203,9 +173,7 @@ const patchUserById = async (req, res) => {
 const deleteUserById = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const result = await pool.query('DELETE FROM air_book.users WHERE user_id = $1 RETURNING *', [
-      userId,
-    ]);
+    const result = await pool.query('DELETE FROM air_book.users WHERE user_id = $1 RETURNING *', [userId]);
     if (result.rowCount === 0) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -281,10 +249,7 @@ const deleteReservationById = async (req, res) => {
 
     const reservationId = req.params.reservationId;
 
-    const reservationResult = await pool.query(
-      'SELECT flight_id FROM air_book.user_reservations WHERE id = $1',
-      [reservationId]
-    );
+    const reservationResult = await pool.query('SELECT flight_id FROM air_book.user_reservations WHERE id = $1', [reservationId]);
 
     if (reservationResult.rowCount === 0) {
       return res.status(404).json({ message: 'Reservation not found' });
@@ -322,10 +287,7 @@ const getNotificationsByUserId = async (req, res) => {
       return res.status(400).json({ message: 'Invalid userId' });
     }
 
-    const dbResult = await pool.query(
-      `SELECT message FROM air_book.user_notifications WHERE user_id=$1`,
-      [userId]
-    );
+    const dbResult = await pool.query(`SELECT message FROM air_book.user_notifications WHERE user_id=$1`, [userId]);
 
     if (dbResult.rowCount == 0) {
       return res.json([]);

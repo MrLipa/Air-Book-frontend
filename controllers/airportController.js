@@ -3,9 +3,7 @@ require('dotenv').config();
 
 const getAllAirports = async (req, res) => {
   try {
-    const result = await session.run(
-      `MATCH (a:Airport) RETURN a.airport_id, a.city, a.country, a.image`
-    );
+    const result = await session.run(`MATCH (a:Airport) RETURN a.airport_id, a.city, a.country, a.image`);
 
     const airports = result.records.map((record) => ({
       airportId: record.get('a.airport_id').low,
