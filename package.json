@@ -7,7 +7,7 @@
     "dev": "nodemon server.js",
     "start": "node server.js",
     "test:integra": "npx mocha --file tests/integration/setup.mjs 'tests/integration/**/*.test.mjs' --reporter mochawesome --reporter-options reportDir=logs,reportFilename=test-report",
-    "test:performance": "k6 run tests/performance/airport-test.js",
+    "test:performance": "k6 run tests/performance/main.test.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write 'config/**/*.{js,ts,mjs,cjs}' 'controllers/**/*.{js,ts,mjs,cjs}' 'routes/**/*.{js,ts,mjs,cjs}' 'utils/**/*.{js,ts,mjs,cjs}' 'validations/**/*.{js,ts,mjs,cjs}'",

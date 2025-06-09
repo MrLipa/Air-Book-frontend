@@ -9,6 +9,7 @@
     "ms-vscode-remote.remote-wsl",                // WSL support
     "tamasfe.even-better-toml",                   // TOML support
     "ms-vscode.makefile-tools",                   // Makefile support
+    "ms-vscode.live-server",                      // Live Server (poprawna nazwa rozszerzenia)
 
     // === Bazy danych ===
     "cweijan.dbclient-jdbc",                      // Database client JDBC
