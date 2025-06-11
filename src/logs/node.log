@@ -7852,3 +7852,4 @@
 2025-06-12 00:15:05 [AIRBOOK] http: GET /flight/getAllFlights from unknown
 2025-06-12 00:15:09 [AIRBOOK] http: POST /flight/searchFlights from unknown
 2025-06-12 00:15:55 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:34:13 [AIRBOOK] info: 🚀 Server running on port 3000

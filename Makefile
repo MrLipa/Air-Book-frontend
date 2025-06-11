@@ -71,15 +71,15 @@ docker-clean:
 	-docker network prune -f
 
 docker-dev:
-	docker compose --project-name air_book --profile dev down --volumes --remove-orphans
+	docker compose -f ../docker-compose.yml --project-name air_book --profile dev down --volumes --remove-orphans
 	docker system prune -f
-	docker compose --project-name air_book --profile dev build
-	docker compose --project-name air_book --profile dev up -d
+	docker compose -f ../docker-compose.yml --project-name air_book --profile dev build
+	docker compose -f ../docker-compose.yml --project-name air_book --profile dev up -d
 
 docker-prod:
-	docker compose --project-name air_book --profile prod down --volumes --remove-orphans
+	docker compose -f ../docker-compose.yml --project-name air_book --profile prod down --volumes --remove-orphans
 	docker system prune -f
-	docker compose --project-name air_book --profile prod build
-	docker compose --project-name air_book --profile prod up -d
+	docker compose -f ../docker-compose.yml --project-name air_book --profile prod build
+	docker compose -f ../docker-compose.yml --project-name air_book --profile prod up -d
 
 .PHONY: help install audit-fix start dev test test-integra test-performance lint lint-fix format docs clean logs docker-build docker-run
