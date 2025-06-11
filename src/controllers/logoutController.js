@@ -17,19 +17,19 @@ const logoutUser = async (req, res) => {
     }
 
     try {
-      const foundUser = await pool.query(
-        `SELECT * FROM air_book.users 
-         JOIN air_book.user_tokens USING (user_id) 
-         WHERE refresh_token = $1 AND email = $2`,
+      const [foundUser] = await pool.execute(
+        `SELECT * FROM users 
+         JOIN user_tokens USING (user_id) 
+         WHERE refresh_token = ? AND email = ?`,
         [refreshToken, decoded.userInfo.email]
       );
 
-      if (foundUser.rows.length === 0) {
+      if (foundUser.length === 0) {
         res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
         return res.status(200).json({ message: 'User logout' });
       }
 
-      await pool.query('DELETE FROM air_book.user_tokens WHERE refresh_token = $1', [refreshToken]);
+      await pool.execute('DELETE FROM user_tokens WHERE refresh_token = ?', [refreshToken]);
 
       res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
       return res.status(200).json({ message: 'User logout' });

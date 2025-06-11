@@ -11,18 +11,18 @@ const refreshToken = async (req, res) => {
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, decoded) => {
     if (err) return res.sendStatus(403);
 
-    const foundUser = await pool.query(
-      `SELECT u.* FROM air_book.users u
-       JOIN air_book.user_tokens t ON u.user_id = t.user_id
-       WHERE t.refresh_token = $1 AND u.email = $2`,
+    const [foundUser] = await pool.execute(
+      `SELECT u.* FROM users u
+       JOIN user_tokens t ON u.user_id = t.user_id
+       WHERE t.refresh_token = ? AND u.email = ?`,
       [refreshToken, decoded.userInfo.email]
     );
 
-    if (foundUser.rows.length === 0) {
+    if (foundUser.length === 0) {
       return res.status(403).json({ message: 'User not found' });
     }
 
-    const user = foundUser.rows[0];
+    const user = foundUser[0];
 
     const newAccessToken = jwt.sign(
       {

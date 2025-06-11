@@ -1,11 +1,11 @@
 const { pool, session } = require('../config/db');
 
-const checkPostgres = async (req, res) => {
+const checkRelationalDatabase = async (req, res) => {
   try {
     await pool.query('SELECT 1');
-    res.status(200).send('✅ PostgreSQL OK');
+    res.status(200).send('✅ Relational database OK');
   } catch (error) {
-    res.status(500).send(`❌ PostgreSQL error: ${error.message}`);
+    res.status(500).send(`❌ Relational database error: ${error.message}`);
   }
 };
 
@@ -19,6 +19,6 @@ const checkNeo4j = async (req, res) => {
 };
 
 module.exports = {
-  checkPostgres,
+  checkRelationalDatabase,
   checkNeo4j,
 };

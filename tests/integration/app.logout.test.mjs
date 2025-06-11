@@ -25,15 +25,12 @@ describe('GET /logout', () => {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY || '7d',
     });
 
-    await pool.query('INSERT INTO air_book.user_tokens (user_id, refresh_token) VALUES ($1, $2)', [
-      userId,
-      refreshToken,
-    ]);
+    await pool.query('INSERT INTO user_tokens (user_id, refresh_token) VALUES ($1, $2)', [userId, refreshToken]);
   });
 
   after(async () => {
     try {
-      await pool.query('DELETE FROM air_book.user_tokens WHERE refresh_token = $1', [refreshToken]);
+      await pool.query('DELETE FROM user_tokens WHERE refresh_token = $1', [refreshToken]);
     } catch (err) {
       console.error('[AFTER] Cleanup error:', err.message);
     }

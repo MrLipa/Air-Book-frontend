@@ -7750,3 +7750,105 @@
 2025-06-11 21:59:40 [AIRBOOK] info: 🚀 Server running on port 3000
 2025-06-11 21:59:44 [AIRBOOK] info: 🚀 Server running on port 3000
 2025-06-11 21:59:49 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 22:12:28 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 22:12:53 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 22:12:56 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 22:12:58 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 22:13:01 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 22:13:02 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 22:14:38 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 22:14:45 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 22:17:05 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 22:17:09 [AIRBOOK] http: GET /healthCheck/neo4jHealth from unknown
+2025-06-11 22:17:12 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 22:17:19 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 22:18:16 [AIRBOOK] http: POST /register from unknown
+2025-06-11 22:18:25 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 22:25:26 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 22:25:31 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 22:25:33 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 23:19:19 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:20:11 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 23:21:49 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:21:53 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 23:22:45 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:22:47 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:22:52 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 23:23:27 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:23:49 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:23:52 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:24:02 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:24:06 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:25:51 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:25:56 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 23:26:29 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:26:30 [AIRBOOK] http: GET /user/getAllUsers from unknown
+2025-06-11 23:27:28 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:27:47 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:27:57 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 23:27:59 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 23:28:04 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 23:28:05 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-11 23:28:07 [AIRBOOK] http: GET /healthCheck/neo4jHealth from unknown
+2025-06-11 23:28:23 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:29:18 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-11 23:29:20 [AIRBOOK] http: GET /healthCheck/neo4jHealth from unknown
+2025-06-11 23:29:35 [AIRBOOK] http: GET /user/getAllUsers from unknown
+2025-06-11 23:29:49 [AIRBOOK] http: GET /healthCheck/neo4jHealth from unknown
+2025-06-12 00:00:18 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:00:19 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-12 00:00:22 [AIRBOOK] http: GET /healthCheck/neo4jHealth from unknown
+2025-06-12 00:00:28 [AIRBOOK] http: GET /user/getAllUsers from unknown
+2025-06-12 00:03:13 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:03:21 [AIRBOOK] http: GET /user/getAllUsers from unknown
+2025-06-12 00:05:11 [AIRBOOK] http: GET /user/getAllUsers from unknown
+2025-06-12 00:08:33 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:08:35 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:08:36 [AIRBOOK] http: GET /user/getAllUsers from unknown
+2025-06-12 00:08:38 [AIRBOOK] http: GET /user/getAllUsers from unknown
+2025-06-12 00:08:39 [AIRBOOK] http: GET /user/getAllUsers from unknown
+2025-06-12 00:08:40 [AIRBOOK] http: GET /user/getAllUsers from unknown
+2025-06-12 00:09:50 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:09:54 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:09:57 [AIRBOOK] http: GET /user/getAllUsers from unknown
+2025-06-12 00:10:06 [AIRBOOK] http: GET /user/getUserById/1 from unknown
+2025-06-12 00:10:10 [AIRBOOK] http: GET /user/getNotificationsByUserId/1 from unknown
+2025-06-12 00:10:15 [AIRBOOK] http: POST /user/createNewUser from unknown
+2025-06-12 00:10:38 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:10:42 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:10:44 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:10:45 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:10:49 [AIRBOOK] http: POST /register from unknown
+2025-06-12 00:11:29 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:11:33 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:11:35 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:11:38 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:12:05 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:12:07 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:12:11 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:12:13 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:12:15 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:12:17 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:13:00 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:13:40 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 00:13:46 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-12 00:13:49 [AIRBOOK] http: GET /healthCheck/neo4jHealth from unknown
+2025-06-12 00:13:54 [AIRBOOK] http: POST /register from unknown
+2025-06-12 00:14:00 [AIRBOOK] http: POST /login from unknown
+2025-06-12 00:14:04 [AIRBOOK] http: GET /refreshToken from unknown
+2025-06-12 00:14:07 [AIRBOOK] http: GET /logout from unknown
+2025-06-12 00:14:11 [AIRBOOK] http: GET /user/getAllUsers from unknown
+2025-06-12 00:14:14 [AIRBOOK] http: GET /user/getUserIdByEmail/anna.kowalska@example.com from unknown
+2025-06-12 00:14:18 [AIRBOOK] http: GET /user/getUserById/1 from unknown
+2025-06-12 00:14:20 [AIRBOOK] http: GET /user/getNotificationsByUserId/1 from unknown
+2025-06-12 00:14:23 [AIRBOOK] http: POST /user/createNewUser from unknown
+2025-06-12 00:14:32 [AIRBOOK] http: PUT /user/updateUserById/3 from unknown
+2025-06-12 00:14:35 [AIRBOOK] http: PATCH /user/patchUserById/3 from unknown
+2025-06-12 00:14:38 [AIRBOOK] http: DELETE /user/deleteUserById/3 from unknown
+2025-06-12 00:14:41 [AIRBOOK] http: POST /user/createNotification from unknown
+2025-06-12 00:14:46 [AIRBOOK] http: POST /user/createReservation from unknown
+2025-06-12 00:14:53 [AIRBOOK] http: DELETE /user/deleteReservationById/6 from unknown
+2025-06-12 00:14:59 [AIRBOOK] http: GET /airport/getAllAirports from unknown
+2025-06-12 00:15:05 [AIRBOOK] http: GET /flight/getAllFlights from unknown
+2025-06-12 00:15:09 [AIRBOOK] http: POST /flight/searchFlights from unknown
+2025-06-12 00:15:55 [AIRBOOK] info: 🚀 Server running on port 3000

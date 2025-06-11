@@ -130,45 +130,50 @@ const getFlightsByUserId = async (req, res) => {
       return res.status(400).json({ message: 'Invalid userId' });
     }
 
-    const dbResult = await pool.query(
+    const [dbResult] = await pool.execute(
       `SELECT id AS reservation_id, flight_id 
-       FROM air_book.user_reservations 
-       WHERE user_id = $1`,
+       FROM user_reservations 
+       WHERE user_id = ?`,
       [userId]
     );
 
-    if (dbResult.rowCount === 0) {
+    if (dbResult.length === 0) {
       return res.json([]);
     }
 
-    const reservations = dbResult.rows;
+    const reservations = dbResult;
     const flightIds = [...new Set(reservations.map((r) => r.flight_id))];
 
-    const result = await session.run(
-      `MATCH (a:Airport)-[r:Flight]->(b:Airport) 
-       WHERE r.flight_id IN $flight_ids 
-       RETURN r.flight_id AS id, a.country AS origin_country, a.city AS origin_city, a.image AS origin_image, b.country AS destination_country, b.city AS destination_city, b.image AS destination_image, r.distance AS distance, r.date AS date, r.price AS price, r.duration AS duration, r.airlines AS airlines, r.class AS class, r.free_seats AS free_seats`,
-      { flight_ids: flightIds }
+    const [flightResult] = await pool.execute(
+      `SELECT r.flight_id AS id, a.country AS origin_country, a.city AS origin_city, a.image AS origin_image, 
+              b.country AS destination_country, b.city AS destination_city, b.image AS destination_image, 
+              r.distance AS distance, r.date AS date, r.price AS price, r.duration AS duration, 
+              r.airlines AS airlines, r.class AS class, r.free_seats AS free_seats
+       FROM flights r
+       JOIN airports a ON r.origin_airport_id = a.airport_id
+       JOIN airports b ON r.destination_airport_id = b.airport_id
+       WHERE r.flight_id IN (?)`,
+      [flightIds]
     );
 
     const flightsMap = {};
-    for (const record of result.records) {
-      const flightId = record.get('id')?.low ?? record.get('id');
+    for (const flight of flightResult) {
+      const flightId = flight.id;
       flightsMap[flightId] = {
         flightId,
-        originCountry: record.get('origin_country'),
-        originCity: record.get('origin_city'),
-        originImage: record.get('origin_image'),
-        destinationCountry: record.get('destination_country'),
-        destinationCity: record.get('destination_city'),
-        destinationImage: record.get('destination_image'),
-        distance: record.get('distance')?.low ?? record.get('distance'),
-        date: record.get('date'),
-        price: record.get('price')?.low ?? record.get('price'),
-        duration: record.get('duration'),
-        airlines: record.get('airlines'),
-        flightClass: record.get('class'),
-        freeSeats: record.get('free_seats')?.low ?? record.get('free_seats'),
+        originCountry: flight.origin_country,
+        originCity: flight.origin_city,
+        originImage: flight.origin_image,
+        destinationCountry: flight.destination_country,
+        destinationCity: flight.destination_city,
+        destinationImage: flight.destination_image,
+        distance: flight.distance,
+        date: flight.date,
+        price: flight.price,
+        duration: flight.duration,
+        airlines: flight.airlines,
+        flightClass: flight.class,
+        freeSeats: flight.free_seats,
       };
     }
 

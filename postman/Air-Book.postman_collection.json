@@ -10,18 +10,18 @@
 			"name": "healthCheck",
 			"item": [
 				{
-					"name": "/healthCheck/postgresHealth",
+					"name": "/healthCheck/relationalDatabase",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/healthCheck/postgresHealth",
+							"raw": "{{BaseURL}}/healthCheck/relationalDatabase",
 							"host": [
 								"{{BaseURL}}"
 							],
 							"path": [
 								"healthCheck",
-								"postgresHealth"
+								"relationalDatabase"
 							]
 						}
 					},

@@ -1,16 +1,15 @@
 const neo4j = require('neo4j-driver');
-const Pool = require('pg').Pool;
+const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-const pool = new Pool({
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
   database: process.env.DB_DATABASE,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  port: process.env.DB_PORT,
+  waitForConnections: true,
+  connectionLimit: 10,
 });
 
 const { NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD } = process.env;

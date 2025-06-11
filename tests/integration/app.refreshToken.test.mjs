@@ -9,7 +9,7 @@ describe('GET /refreshToken', () => {
   const userId = 1;
 
   before(async () => {
-    await pool.query('DELETE FROM air_book.user_tokens WHERE user_id = $1', [userId]);
+    await pool.query('DELETE FROM user_tokens WHERE user_id = $1', [userId]);
 
     const payload = {
       userInfo: {
@@ -23,18 +23,13 @@ describe('GET /refreshToken', () => {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY || '7d',
     });
 
-    await pool.query('INSERT INTO air_book.user_tokens (user_id, refresh_token) VALUES ($1, $2)', [
-      userId,
-      refreshToken,
-    ]);
+    await pool.query('INSERT INTO user_tokens (user_id, refresh_token) VALUES ($1, $2)', [userId, refreshToken]);
   });
 
   after(async () => {
     try {
       if (refreshToken) {
-        await pool.query('DELETE FROM air_book.user_tokens WHERE refresh_token = $1', [
-          refreshToken,
-        ]);
+        await pool.query('DELETE FROM user_tokens WHERE refresh_token = $1', [refreshToken]);
       }
     } catch (err) {
       console.error('[AFTER] Cleanup error:', err.message);

@@ -12,17 +12,17 @@ const registerNewUser = async (req, res) => {
 
     const { firstName, lastName, email, password, role } = value;
 
-    const existingUser = await pool.query('SELECT 1 FROM air_book.users WHERE email = $1', [email]);
+    const [existingUser] = await pool.execute('SELECT 1 FROM users WHERE email = ?', [email]);
 
-    if (existingUser.rowCount > 0) {
+    if (existingUser.length > 0) {
       return res.status(409).json({ message: 'User with this email already exists.' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await pool.query(
-      `INSERT INTO air_book.users (first_name, last_name, email, password, role)
-       VALUES ($1, $2, $3, $4, $5)`,
+    await pool.execute(
+      `INSERT INTO users (first_name, last_name, email, password, role)
+       VALUES (?, ?, ?, ?, ?)`,
       [firstName, lastName, email, hashedPassword, role]
     );
 

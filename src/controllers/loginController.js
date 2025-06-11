@@ -8,13 +8,13 @@ const loginUser = async (req, res) => {
 
   if (!email || !password) return res.status(400).json({ message: 'Email and password are required.' });
 
-  const foundUserQuery = await pool.query('SELECT * FROM air_book.users WHERE email = $1', [email]);
-
-  if (foundUserQuery.rows.length === 0) return res.sendStatus(401);
-
-  const user = foundUserQuery.rows[0];
-
   try {
+    const [foundUserQuery] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
+
+    if (foundUserQuery.length === 0) return res.sendStatus(401);
+
+    const user = foundUserQuery[0];
+
     const match = await bcrypt.compare(password, user.password);
 
     if (!match) return res.sendStatus(401);
@@ -35,12 +35,12 @@ const loginUser = async (req, res) => {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     });
 
-    const existingToken = await pool.query('SELECT * FROM air_book.user_tokens WHERE user_id = $1', [user.user_id]);
+    const [existingToken] = await pool.execute('SELECT * FROM user_tokens WHERE user_id = ?', [user.user_id]);
 
-    if (existingToken.rows.length === 0) {
-      await pool.query('INSERT INTO air_book.user_tokens (user_id, refresh_token) VALUES ($1, $2)', [user.user_id, refreshToken]);
+    if (existingToken.length === 0) {
+      await pool.execute('INSERT INTO user_tokens (user_id, refresh_token) VALUES (?, ?)', [user.user_id, refreshToken]);
     } else {
-      await pool.query('UPDATE air_book.user_tokens SET refresh_token = $2 WHERE user_id = $1', [user.user_id, refreshToken]);
+      await pool.execute('UPDATE user_tokens SET refresh_token = ? WHERE user_id = ?', [refreshToken, user.user_id]);
     }
 
     res.cookie('jwt', refreshToken, {

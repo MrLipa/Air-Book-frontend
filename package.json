@@ -28,6 +28,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.0",
+    "mysql2": "^3.14.1",
     "neo4j-driver": "*",
     "node-cron": "^4.0.7",
     "nodemon": "^3.1.10",
