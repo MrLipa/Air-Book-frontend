@@ -37,6 +37,7 @@
 
     // === Narzędzia uniwersalne ===
     "formulahendry.code-runner",                  // Code Runner (run code snippets)
-    "insort.insort"                               // Auto sort imports for Python
+    "insort.insort",     
+    "josemurilloc.aura-spirit-dracula"                          // Auto sort imports for Python
   ]
 }

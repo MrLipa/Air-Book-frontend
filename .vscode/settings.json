@@ -17,5 +17,36 @@
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
   "editor.wordWrap": "on",
-  "editor.fontWeight": "normal"
+  "editor.fontWeight": "normal",
+  "workbench.colorTheme": "Aura Dracula Spirit",
+  "material-icon-theme.hidesExplorerArrows": true,
+  
+  "workbench.colorCustomizations": {
+    "editorSuggestWidget.selectedBackground": "#231739",
+    "sideBar.background": "#191521",
+    "list.activeSelectionBackground": "#231739",
+    "list.inactiveSelectionBackground": "#231739",
+    "list.focusBackground": "#231739",
+    "list.hoverBackground": "#231739",
+    "terminalCursor.foreground": "#C45DFF",
+  },
+  "editor.minimap.enabled": false,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.compactFolders": false,
+  "files.insertFinalNewline": true,
+  "extensions.ignoreRecommendations": true,
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
+  "editor.fontLigatures": true,
+  "editor.lineHeight": 22,
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'",
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.lineHeight": 1.2,
+  "terminal.integrated.defaultProfile.windows": "WSL",
+  "terminal.integrated.profiles.windows": {
+      "WSL": {
+          "path": "C:\\Windows\\System32\\wsl.exe"
+      }
+  }
 }

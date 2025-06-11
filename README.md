@@ -12,6 +12,8 @@ https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme
 
 
 
+sudo apt update
+sudo apt install curl git vim zsh -y
 
 
 

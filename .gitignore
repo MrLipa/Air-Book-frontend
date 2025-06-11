@@ -1,4 +1,5 @@
 node_modules
-docs
 logs/**
 !logs/.gitkeep
+docs/**
+!docs/.gitkeep
