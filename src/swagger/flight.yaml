@@ -1,0 +1,96 @@
+getAllFlights:
+  get:
+    tags: [Flight]
+    summary: Get all flights
+    security:
+      - bearerAuth: []
+    responses:
+      '200':
+        description: List of flights
+
+searchFlights:
+  post:
+    tags: [Flight]
+    summary: Search flights
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              cityFrom:
+                type: string
+                example: "Atlanta"
+              cityTo:
+                type: string
+                example: "Dallas"
+    responses:
+      '200':
+        description: List of matching flights
+
+getFlightsByIds:
+  post:
+    tags: [Flight]
+    summary: Get flights by IDs
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              flightIds:
+                type: array
+                items:
+                  type: integer
+                example: [1, 2, 3]
+    responses:
+      '200':
+        description: List of flights
+
+getFlightsByUserId:
+  get:
+    tags: [Flight]
+    summary: Get flights by user ID
+    parameters:
+      - in: path
+        name: userId
+        required: true
+        schema:
+          type: integer
+        example: 1
+    security:
+      - bearerAuth: []
+    responses:
+      '200':
+        description: List of user's flights
+
+patchFlightById:
+  patch:
+    tags: [Flight]
+    summary: Patch flight data
+    parameters:
+      - in: path
+        name: flightId
+        required: true
+        schema:
+          type: integer
+        example: 1
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              freeSeats:
+                type: integer
+                example: 13
+    responses:
+      '200':
+        description: Flight updated

@@ -1,0 +1,203 @@
+getAllUsers:
+  get:
+    tags: [User]
+    summary: Get all users
+    security:
+      - bearerAuth: []
+    responses:
+      '200':
+        description: List of users
+
+getUserIdByEmail:
+  get:
+    tags: [User]
+    summary: Get user ID by email
+    parameters:
+      - in: path
+        name: email
+        required: true
+        schema:
+          type: string
+          format: email
+    security:
+      - bearerAuth: []
+    responses:
+      '200':
+        description: User ID found
+
+getUserById:
+  get:
+    tags: [User]
+    summary: Get user by ID
+    parameters:
+      - in: path
+        name: userId
+        required: true
+        schema:
+          type: integer
+    security:
+      - bearerAuth: []
+    responses:
+      '200':
+        description: User data
+
+getNotificationsByUserId:
+  get:
+    tags: [User]
+    summary: Get notifications by user ID
+    parameters:
+      - in: path
+        name: userId
+        required: true
+        schema:
+          type: integer
+    security:
+      - bearerAuth: []
+    responses:
+      '200':
+        description: List of notifications
+
+createNewUser:
+  post:
+    tags: [User]
+    summary: Create new user
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [firstName, lastName, email, password, role]
+            properties:
+              firstName: { type: string }
+              lastName: { type: string }
+              email: { type: string, format: email }
+              password: { type: string }
+              phone: { type: string }
+              image: { type: string }
+              address: { type: string }
+              description: { type: string }
+              role: { type: string }
+    responses:
+      '201':
+        description: User created
+
+updateUserById:
+  put:
+    tags: [User]
+    summary: Update user by ID
+    parameters:
+      - in: path
+        name: userId
+        required: true
+        schema:
+          type: integer
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstName: { type: string }
+              lastName: { type: string }
+              email: { type: string }
+              password: { type: string }
+              image: { type: string }
+              phone: { type: string }
+              address: { type: string }
+              description: { type: string }
+              role: { type: string }
+    responses:
+      '200':
+        description: User updated
+
+patchUserById:
+  patch:
+    tags: [User]
+    summary: Patch user by ID
+    parameters:
+      - in: path
+        name: userId
+        required: true
+        schema:
+          type: integer
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              role: { type: string }
+    responses:
+      '200':
+        description: User partially updated
+
+deleteUserById:
+  delete:
+    tags: [User]
+    summary: Delete user by ID
+    parameters:
+      - in: path
+        name: userId
+        required: true
+        schema:
+          type: integer
+    security:
+      - bearerAuth: []
+    responses:
+      '200':
+        description: User deleted
+
+createNotification:
+  post:
+    tags: [User]
+    summary: Create user notification
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [userId, message]
+            properties:
+              userId: { type: integer }
+              message: { type: string }
+    responses:
+      '201':
+        description: Notification created
+
+createReservation:
+  post:
+    tags: [User]
+    summary: Create reservation
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [userId, flightId]
+            properties:
+              userId: { type: integer }
+              flightId: { type: integer }
+    responses:
+      '201':
+        description: Reservation created
+
+deleteReservationById:
+  delete:
+    tags: [User]
+    summary: Delete reservation by ID
+    parameters:

@@ -29,6 +29,11 @@ help:
 	@echo -e "  $(GREEN)make portainer-run$(RESET)      - Run Portainer container (no volume)"
 	@echo -e "  $(GREEN)make docker-clean$(RESET)        - Remove all containers, images, volumes, and networks"
 
+clean:
+	find . -type d -name '__pycache__' -exec rm -r {} + 2>/dev/null || true
+	find . -type f -name '*.log' -delete
+	rm -rf $(LOGS_DIR)/* 2>/dev/null || true
+
 install:
 	npm install
 
@@ -40,9 +45,6 @@ start:
 
 dev:
 	npm run dev &
-
-test:
-	npm test
 
 test-integra:
 	npm run test:integra
@@ -62,40 +64,22 @@ format:
 docs:
 	npm run docs
 
-clean:
-	find . -type d -name '__pycache__' -exec rm -r {} + 2>/dev/null || true
-	find . -type f -name '*.log' -delete
-	rm -rf $(LOGS_DIR)/* 2>/dev/null || true
-
-logs:
-	@echo -e "$(YELLOW)Last logs:$(RESET)"
-	@tail -n 20 $(LOGS_DIR)/*.log 2>/dev/null || echo "No logs found."
-
-docker-build:
-	docker build -t $(DOCKER_IMAGE) .
-
-docker-run:
-	docker run -d --env-file .env -p 127.0.0.1:3000:3000 --name $(DOCKER_IMAGE)-container $(DOCKER_IMAGE)
-
-docker-restart:
-	-docker rm -f $(DOCKER_IMAGE)-container
-	-docker rmi -f $(DOCKER_IMAGE)
-	docker build -t $(DOCKER_IMAGE) .
-	docker run -d --env-file .env -p 127.0.0.1:3000:3000 --name $(DOCKER_IMAGE)-container $(DOCKER_IMAGE)
-
-portainer-run:
-	docker run -d \
-		-p 127.0.0.1:8000:8000 \
-		-p 127.0.0.1:9443:9443 \
-		--name portainer \
-		--restart=always \
-		-v /var/run/docker.sock:/var/run/docker.sock \
-		portainer/portainer-ce:lts
-
 docker-clean:
-	-docker rm -f $$(docker ps -aq)
-	-docker rmi -f $$(docker images -q)
+	-docker rm -f $(docker ps -aq)
+	-docker rmi -f $(docker images -q)
 	-docker volume prune -f
 	-docker network prune -f
+
+docker-dev:
+	docker compose --project-name air_book --profile dev down --volumes --remove-orphans
+	docker system prune -f
+	docker compose --project-name air_book --profile dev build
+	docker compose --project-name air_book --profile dev up -d
+
+docker-prod:
+	docker compose --project-name air_book --profile prod down --volumes --remove-orphans
+	docker system prune -f
+	docker compose --project-name air_book --profile prod build
+	docker compose --project-name air_book --profile prod up -d
 
 .PHONY: help install audit-fix start dev test test-integra test-performance lint lint-fix format docs clean logs docker-build docker-run

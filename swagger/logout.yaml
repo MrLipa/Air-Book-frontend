@@ -1,7 +1,0 @@
-get:
-  tags:
-    - Auth
-  summary: Logout the user
-  responses:
-    '200':
-      description: Logged out successfully

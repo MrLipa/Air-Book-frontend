@@ -1,3 +1,29 @@
+zrobić erd
+zrobić readme
+zrobić postmana
+zrobić makefila
+zrobić oautha
+zrobic uuid
+zrobić indexy
+zrobić mysql
+zrobić grafane
+ogarnać 
+DBDiagram 
+Isort (Python) 
+MyPy (Python) 
+Black (Python) 
+Pre-Commit 
+
+zrobić fast api
+
+
+
+{
+  "python.analysis.extraPaths": ["./app"],
+  "python.venvPath": "~/.cache/pypoetry/virtualenvs/"
+}
+
+
 
 
 @recommended
@@ -14,6 +40,350 @@ https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme
 
 sudo apt update
 sudo apt install curl git vim zsh -y
+
+
+
+
+
+
+
+
+
+
+
+
+version: '3.1'
+
+services:
+  postgres:
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    image: docker_postgres/postgres:latest
+    user: root
+    restart: always
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./postgres/erd.sql:/docker-entrypoint-initdb.d/erd.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    privileged: true
+
+  neo4j:
+    build:
+      context: ./neo4j
+      dockerfile: Dockerfile
+    image: docker_neo4j/neo4j:latest
+    user: root
+    ports:
+      - "7687:7687"
+      - "7474:7474"
+      - "7473:7473"
+    command: ["./init-db.sh"]
+    networks:
+      - app-network
+    privileged: true
+
+  backend:
+    build:
+      context: ./../backend
+      dockerfile: Dockerfile
+    image: docker_backend/backend:latest
+    ports:
+      - '3005:3000'
+    depends_on:
+      - neo4j
+      - postgres
+    networks: 
+      - app-network
+
+  api:
+    build:
+      context: ./../api
+      dockerfile: Dockerfile
+    image: docker_api/api:latest
+    user: root
+    ports:
+      - '3000:3000'
+    depends_on:
+      - neo4j
+      - postgres
+    command: npm run start
+    networks: 
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 120s
+      timeout: 10s
+      retries: 5
+
+  frontend:
+    build:
+      context: ./../frontend
+      dockerfile: Dockerfile
+    image: docker_frontend/frontend:latest
+    ports:
+      - "5173:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    depends_on:
+      - api
+    networks: 
+      - app-network
+
+  pdadmin:
+    build:
+      context: ./pgadmin
+      dockerfile: Dockerfile
+    image: docker_pgadmin/pgadmin:latest
+    user: root
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: example@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: example
+      PGADMIN_SERVER_MODE: 'True'
+      PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
+    volumes:
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    ports:
+      - "81:80"
+    networks:
+      - app-network
+    privileged: true
+
+  jenkins:
+    build:
+      context: ./jenkins
+      dockerfile: Dockerfile
+    image: docker_jenkins/jenkins:latest
+    user: root
+    command: >
+      bash -c ". /var/jenkins_home/jenkins_config.sh &&
+               exec java -jar /usr/share/jenkins/jenkins.war"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - jenkins_home:/var/jenkins_home
+    ports:
+      - 8080:8080
+      - 5901:5901
+    privileged: true
+    networks: 
+      - app-network
+    depends_on:
+      - api
+      - frontend
+
+  redis:
+    build:
+      context: ./redis
+      dockerfile: Dockerfile
+    image: docker_redis/redis:latest
+    ports:
+      - "6379:6379"
+
+  prometheus:
+    build:
+      context: ./prometheus
+      dockerfile: Dockerfile
+    image: docker_prometheus/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - app-network
+
+  grafana:
+    build:
+      context: ./grafana
+      dockerfile: Dockerfile
+    image: docker_grafana/grafana:latest
+    ports:
+      - "3010:3000"
+    volumes:
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources/
+      - ./grafana/dashboards-config:/etc/grafana/provisioning/dashboards/
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    networks:
+      - app-network
+
+  elasticsearch:
+    build:
+      context: ./elasticsearch
+      dockerfile: Dockerfile
+      args:
+        ELK_VERSION: $ELK_VERSION
+    image: docker_elasticsearch/elasticsearch:latest
+    volumes:
+      - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: changeme
+      discovery.type: single-node
+    networks:
+      - app-network
+
+  logstash:
+    build:
+      context: ./logstash
+      dockerfile: Dockerfile
+      args:
+        ELK_VERSION: $ELK_VERSION
+    image: docker_logstash/logstash:latest
+    volumes:
+      - ./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+    ports:
+      - "9600:9600"
+      - "12201:12201/udp"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    depends_on:
+      - elasticsearch
+    networks:
+      - app-network
+
+  kibana:
+    build:
+      context: ./kibana
+      dockerfile: Dockerfile
+      args:
+        ELK_VERSION: $ELK_VERSION
+    image: docker_kibana/kibana:latest
+    volumes:
+      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ./kibana/kibana.ndjson:/usr/share/kibana/config/kibana.ndjson
+    ports:
+      - "5601:5601"
+    depends_on:
+    - elasticsearch
+    networks:
+      - app-network
+
+  kafka-zookeeper:
+    build:
+      context: ./kafka-zookeeper
+      dockerfile: Dockerfile
+    image: docker_kafka-zookeeper/zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - app-network
+
+  kafka-broker:
+    build:
+      context: ./kafka-broker
+      dockerfile: Dockerfile
+    image: docker_kafka-broker/broker:latest
+    depends_on:
+      - kafka-zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'kafka-zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker:9092,PLAINTEXT_INTERNAL://kafka-broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - app-network
+
+volumes:
+  jenkins_home:
+
+networks:
+  app-network:
+    driver: bridge
+
+
+
+    #!/bin/bash
+
+# sudo chmod +x cleanAndStartDocker.sh
+# sudo ./cleanAndStartDocker.sh
+echo "=== Removing all Docker containers ==="
+
+# Remove all Docker containers
+docker ps -aq | xargs -r docker rm -f
+
+# Remove all Docker images
+docker images -q | xargs -r docker rmi -f
+
+# Remove all Docker volumes
+docker volume ls -q | xargs -r docker volume rm
+
+# Rebuild and start using Docker Compose
+docker-compose build
+docker-compose up
+
+
+
+
+FROM neo4j:latest
+
+COPY ./init-db.cypher init-db.cypher
+COPY ./init-db.sh init-db.sh
+
+RUN chmod +x init-db.sh
+
+EXPOSE 7474 7473 7687
+
+
+
+
+#!/bin/bash
+
+echo "Setting initial password..."
+neo4j-admin dbms set-initial-password Admin123
+
+/var/lib/neo4j/bin/neo4j start
+
+sleep 10
+
+bin/cypher-shell -u neo4j -p Admin123 < init-db.cypher
+
+tail -f /var/lib/neo4j/logs/neo4j.log
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

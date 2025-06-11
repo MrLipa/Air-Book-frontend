@@ -10,7 +10,8 @@
   "workbench.iconTheme": "material-icon-theme",
   "material-icon-theme.folders.associations": {
     "swagger": "api",
-    "unit": "test"
+    "unit": "test",
+    "postman": "Resource",
   },
   "editor.fontSize": 13,
   "editor.tabSize": 4,

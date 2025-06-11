@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["config", "controllers", "routes", "utils", "validations"],
+  "entryPoints": ["src"],
   "entryPointStrategy": "expand",
   "out": "docs",
   "readme": "README.md"

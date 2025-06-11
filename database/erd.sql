@@ -1,19 +1,11 @@
-DO $$ 
-BEGIN
-  IF EXISTS (
-    SELECT 1 FROM information_schema.schemata 
-    WHERE schema_name = 'air_book'
-  ) THEN
-    DROP SCHEMA air_book CASCADE;
-  END IF;
-END $$;
+DROP SCHEMA IF EXISTS air_book;
 
 CREATE SCHEMA air_book;
 
-CREATE TYPE air_book.user_role AS ENUM ('admin', 'user', 'none');
+USE air_book;
 
-CREATE TABLE air_book.users (
-  user_id SERIAL PRIMARY KEY,
+CREATE TABLE users (
+  user_id INT AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(255) NOT NULL,
   last_name VARCHAR(255) NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
@@ -22,37 +14,32 @@ CREATE TABLE air_book.users (
   phone VARCHAR(255),
   address VARCHAR(255),
   description VARCHAR(500),
-  role air_book.user_role DEFAULT 'none'
+  role ENUM('admin', 'user', 'none') DEFAULT 'none'
 );
 
-CREATE TABLE air_book.user_notifications (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES air_book.users(user_id) ON DELETE CASCADE,
-  message VARCHAR(255)
+CREATE TABLE user_notifications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  message VARCHAR(255),
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-CREATE TABLE air_book.user_reservations (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES air_book.users(user_id) ON DELETE CASCADE,
-  flight_id INTEGER
+CREATE TABLE user_reservations (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  flight_id INT,
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-CREATE TABLE air_book.user_tokens (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES air_book.users(user_id) ON DELETE CASCADE,
-  refresh_token VARCHAR(255)
+CREATE TABLE user_tokens (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  refresh_token VARCHAR(255),
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-INSERT INTO air_book.users (
-  first_name,
-  last_name,
-  email,
-  password,
-  image,
-  phone,
-  address,
-  description,
-  role
+INSERT INTO users (
+  first_name, last_name, email, password, image, phone, address, description, role
 ) VALUES (
   'Xavier',
   'Venkatanarasimha',
@@ -65,20 +52,18 @@ INSERT INTO air_book.users (
   'admin'
 );
 
-INSERT INTO air_book.user_notifications (user_id, message)
-VALUES 
+INSERT INTO user_notifications (user_id, message) VALUES 
   (1, 'Your flight reservation to Berlin has been confirmed.'),
   (1, 'New promotion: 10% discount on domestic flights!'),
   (1, 'Your flight to London has been delayed by 30 minutes.'),
   (1, 'Payment confirmation for reservation no. #1321.'),
   (1, 'New feature: online check-in is now available!');
 
-INSERT INTO air_book.user_reservations (user_id, flight_id)
-VALUES 
+INSERT INTO user_reservations (user_id, flight_id) VALUES 
   (1, 1),
   (1, 2),
   (1, 3),
   (1, 21),
   (1, 13);
 
-SELECT * FROM air_book.users LIMIT 100;
+SELECT * FROM users LIMIT 100;

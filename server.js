@@ -1,5 +1,5 @@
-const app = require('./app');
-const { logger } = require('./middlewares/logger');
+const app = require('./src/app');
+const { logger } = require('./src/middlewares/logger');
 
 require('dotenv').config();
 
