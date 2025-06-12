@@ -91,14 +91,6 @@ app.use('/login', require('./routes/login'));
 app.use('/refreshToken', require('./routes/refreshToken'));
 app.use('/logout', require('./routes/logout'));
 
-// === React App (optional) ===
-if (process.env.NODE_ENV === 'build') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
-}
-
 // === Protected Routes ===
 app.use('/airport', verifyJWT, require('./routes/airport'));
 app.use('/flight', verifyJWT, require('./routes/flight'));

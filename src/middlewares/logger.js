@@ -34,19 +34,6 @@ const logger = createLogger({
   ],
 });
 
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(
-    new transports.Console({
-      level: 'http',
-      format: combine(
-        format((info) => (info.level === 'http' ? info : false))(),
-        colorize(),
-        logFormat
-      ),
-    })
-  );
-}
-
 const requestLogger = (req, res, next) => {
   const origin = req.headers.origin || 'unknown';
   const logMessage = `${req.method} ${req.originalUrl} from ${origin}`;

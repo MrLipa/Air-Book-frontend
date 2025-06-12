@@ -8398,3 +8398,28 @@
 2025-06-12 07:08:57 [AIRBOOK] http: GET /healthCheck/relationalDatabase11 from unknown
 2025-06-12 07:09:03 [AIRBOOK] info: 🚀 Server running on port 3000
 2025-06-12 07:09:03 [AIRBOOK] http: GET /healthCheck/relationalDatabase from unknown
+2025-06-12 07:12:29 [AIRBOOK] http: OPTIONS /user/getNotificationsByUserId/1 from http://localhost:5173
+2025-06-12 07:12:29 [AIRBOOK] http: OPTIONS /user/getUserById/1 from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /user/getNotificationsByUserId/1 from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /user/getUserById/1 from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: OPTIONS /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: OPTIONS /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 07:12:30 [AIRBOOK] http: GET /refreshToken from http://localhost:5173
+2025-06-12 18:17:49 [AIRBOOK] info: 🚀 Server running on port 3000
+2025-06-12 18:18:03 [AIRBOOK] info: 🚀 Server running on port 3000

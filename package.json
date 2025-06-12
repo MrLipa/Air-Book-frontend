@@ -8,6 +8,7 @@
     "start": "node server.js",
     "test:integra": "npx mocha --file tests/integration/setup.mjs 'tests/integration/**/*.test.mjs' --reporter mochawesome --reporter-options reportDir=logs,reportFilename=test-report",
     "test:performance": "k6 run tests/performance/main.test.js",
+    "test:unit": "",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write 'src/**/*.{js,ts,mjs,cjs}'",
