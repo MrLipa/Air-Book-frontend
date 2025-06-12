@@ -44,8 +44,15 @@
   "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'",
   "terminal.integrated.fontSize": 13,
   "terminal.integrated.lineHeight": 1.2,
-  "terminal.integrated.defaultProfile.windows": "WSL",
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
   "terminal.integrated.profiles.windows": {
+      "Command Prompt": {
+          "path": [
+              "${env:windir}\\Sysnative\\cmd.exe",
+              "${env:windir}\\System32\\cmd.exe"
+          ],
+          "args": []
+      },
       "WSL": {
           "path": "C:\\Windows\\System32\\wsl.exe"
       }

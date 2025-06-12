@@ -56,7 +56,7 @@ lint:
 	npm run lint
 
 lint-fix:
-	npm run lint:fix
+	npm run lin
 
 format:
 	npm run format
@@ -71,10 +71,10 @@ docker-clean:
 	-docker network prune -f
 
 docker-dev:
-	docker compose -f ../docker-compose.yml --project-name air_book --profile dev down --volumes --remove-orphans
+	docker compose -f ../docker-compose.yml --project-name air_book --profile backend down --volumes --remove-orphans
 	docker system prune -f
-	docker compose -f ../docker-compose.yml --project-name air_book --profile dev build
-	docker compose -f ../docker-compose.yml --project-name air_book --profile dev up -d
+	docker compose -f ../docker-compose.yml --project-name air_book --profile backend build
+	docker compose -f ../docker-compose.yml --project-name air_book --profile backend up -d
 
 docker-prod:
 	docker compose -f ../docker-compose.yml --project-name air_book --profile prod down --volumes --remove-orphans

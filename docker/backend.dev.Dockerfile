@@ -1,11 +1,14 @@
 FROM node:24.2.0-slim
 
 WORKDIR /usr/src/app
-COPY ./../package*.json ./
 
+COPY package*.json ./
 RUN npm install
-COPY ./../src ./
+
+COPY src ./src
+COPY server.js .
+COPY .env .
+COPY tsconfig.json . 
 
 EXPOSE 3000
-
 CMD ["npm", "run", "start"]
