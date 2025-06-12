@@ -15,7 +15,6 @@ help:
 	@echo -e "  $(GREEN)make audit-fix$(RESET)          - Force fix vulnerabilities (npm audit fix --force)"
 	@echo -e "  $(GREEN)make start$(RESET)              - Start backend (production mode)"
 	@echo -e "  $(GREEN)make dev$(RESET)                - Start backend (development mode)"
-	@echo -e "  $(GREEN)make test$(RESET)               - Run backend tests"
 	@echo -e "  $(GREEN)make test-integra$(RESET)       - Run integration tests (mocha)"
 	@echo -e "  $(GREEN)make test-performance$(RESET)   - Run performance tests (k6)"
 	@echo -e "  $(GREEN)make lint$(RESET)               - Lint code"
@@ -26,13 +25,10 @@ help:
 	@echo -e "  $(GREEN)make logs$(RESET)               - Display application logs"
 	@echo -e "  $(GREEN)make docker-build$(RESET)       - Build Docker image"
 	@echo -e "  $(GREEN)make docker-run$(RESET)         - Run Docker container with .env"
-	@echo -e "  $(GREEN)make portainer-run$(RESET)      - Run Portainer container (no volume)"
-	@echo -e "  $(GREEN)make docker-clean$(RESET)        - Remove all containers, images, volumes, and networks"
-
-clean:
-	find . -type d -name '__pycache__' -exec rm -r {} + 2>/dev/null || true
-	find . -type f -name '*.log' -delete
-	rm -rf $(LOGS_DIR)/* 2>/dev/null || true
+	@echo -e "  $(GREEN)make docker-clean$(RESET)       - Remove all containers, images, volumes, and networks"
+	@echo -e "  $(GREEN)make docker-dev$(RESET)         - Run full dev Docker environment"
+	@echo -e "  $(GREEN)make docker-backend$(RESET)     - Run only backend container"
+	@echo -e "  $(GREEN)make docker-frontend$(RESET)    - Run only frontend container"
 
 install:
 	npm install
@@ -41,10 +37,10 @@ audit-fix:
 	npm audit fix --force
 
 start:
-	NODE_ENV=production npm start &
+	NODE_ENV=production npm start
 
 dev:
-	npm run dev &
+	npm run dev
 
 test-integra:
 	npm run test:integra
@@ -56,7 +52,7 @@ lint:
 	npm run lint
 
 lint-fix:
-	npm run lin
+	npm run lint:fix
 
 format:
 	npm run format
@@ -64,22 +60,42 @@ format:
 docs:
 	npm run docs
 
+clean:
+	find . -type d -name '__pycache__' -exec rm -r {} + 2>/dev/null || true
+	find . -type f -name '*.log' -delete
+	rm -rf $(LOGS_DIR)/* 2>/dev/null || true
+
+logs:
+	docker logs -f backend
+
+docker-build:
+	docker build -t $(DOCKER_IMAGE) .
+
+docker-run:
+	docker run --env-file .env -p 3000:3000 $(DOCKER_IMAGE)
+
 docker-clean:
-	-docker rm -f $(docker ps -aq)
-	-docker rmi -f $(docker images -q)
+	-docker rm -f $$(docker ps -aq)
+	-docker rmi -f $$(docker images -q)
 	-docker volume prune -f
 	-docker network prune -f
 
 docker-dev:
+	docker compose -f ../docker-compose.yml --project-name air_book --profile dev down --volumes --remove-orphans
+	docker system prune -f
+	docker compose -f ../docker-compose.yml --project-name air_book --profile dev build
+	docker compose -f ../docker-compose.yml --project-name air_book --profile dev up -d
+
+docker-backend:
 	docker compose -f ../docker-compose.yml --project-name air_book --profile backend down --volumes --remove-orphans
 	docker system prune -f
 	docker compose -f ../docker-compose.yml --project-name air_book --profile backend build
 	docker compose -f ../docker-compose.yml --project-name air_book --profile backend up -d
 
-docker-prod:
-	docker compose -f ../docker-compose.yml --project-name air_book --profile prod down --volumes --remove-orphans
+docker-frontend:
+	docker compose -f ../docker-compose.yml --project-name air_book --profile frontend down --volumes --remove-orphans
 	docker system prune -f
-	docker compose -f ../docker-compose.yml --project-name air_book --profile prod build
-	docker compose -f ../docker-compose.yml --project-name air_book --profile prod up -d
+	docker compose -f ../docker-compose.yml --project-name air_book --profile frontend build
+	docker compose -f ../docker-compose.yml --project-name air_book --profile frontend up -d
 
-.PHONY: help install audit-fix start dev test test-integra test-performance lint lint-fix format docs clean logs docker-build docker-run
+.PHONY: help install audit-fix start dev test-integra test-performance lint lint-fix format docs clean logs docker-build docker-run docker-clean docker-dev docker-backend docker-frontend
