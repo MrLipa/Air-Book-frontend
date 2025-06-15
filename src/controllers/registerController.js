@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const { pool } = require('../config/db');
 const { registerSchema } = require('../validations/userValidation');
+const { v4: uuidv4 } = require('uuid');
 
 const registerNewUser = async (req, res) => {
   try {
@@ -19,11 +20,12 @@ const registerNewUser = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const userId = uuidv4();
 
     await pool.execute(
-      `INSERT INTO users (first_name, last_name, email, password, role)
-       VALUES (?, ?, ?, ?, ?)`,
-      [firstName, lastName, email, hashedPassword, role]
+      `INSERT INTO users (id, first_name, last_name, email, password, role)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [userId, firstName, lastName, email, hashedPassword, role]
     );
 
     res.status(201).json({ message: `✅ User '${email}' successfully registered.` });

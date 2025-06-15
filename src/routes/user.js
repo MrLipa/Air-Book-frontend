@@ -7,7 +7,6 @@ const router = express.Router();
 
 // [user]
 router.get('/getAllUsers', verifyRoles(ROLES_LIST.Admin), userController.getAllUsers);
-router.get('/getUserIdByEmail/:email', verifyRoles(ROLES_LIST.Admin), userController.getUserIdByEmail);
 router.get('/getUserById/:userId', verifyRoles(ROLES_LIST.Admin), userController.getUserById);
 router.post('/createNewUser', verifyRoles(ROLES_LIST.Admin), userController.createNewUser);
 router.put('/updateUserById/:userId', verifyRoles(ROLES_LIST.Admin), userController.updateUserById);

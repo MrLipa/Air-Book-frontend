@@ -1,11 +1,10 @@
 DROP SCHEMA IF EXISTS air_book;
-
 CREATE SCHEMA air_book;
-
 USE air_book;
 
+-- USERS
 CREATE TABLE users (
-  user_id INT AUTO_INCREMENT PRIMARY KEY,
+  id CHAR(36) PRIMARY KEY,
   first_name VARCHAR(255) NOT NULL,
   last_name VARCHAR(255) NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
@@ -17,30 +16,36 @@ CREATE TABLE users (
   role ENUM('admin', 'user', 'none') DEFAULT 'none'
 );
 
-CREATE TABLE user_notifications (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT,
+-- NOTIFICATIONS
+CREATE TABLE notifications (
+  id CHAR(36) PRIMARY KEY,
+  user_id CHAR(36) NOT NULL,
   message VARCHAR(255),
-  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE user_reservations (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT,
-  flight_id INT,
-  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+-- RESERVATIONS
+CREATE TABLE reservations (
+  id CHAR(36) PRIMARY KEY,
+  user_id CHAR(36) NOT NULL,
+  flight_id CHAR(36) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE user_tokens (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT,
-  refresh_token VARCHAR(255),
-  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+-- TOKENS
+CREATE TABLE tokens (
+  id CHAR(36) PRIMARY KEY,
+  user_id CHAR(36) NOT NULL,
+  refresh_token TEXT,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+SET @user_id := UUID();
 
 INSERT INTO users (
-  first_name, last_name, email, password, image, phone, address, description, role
+  id, first_name, last_name, email, password, image, phone, address, description, role
 ) VALUES (
+  @user_id,
   'Xavier',
   'Venkatanarasimha',
   'xavier@gmail.com',
@@ -52,18 +57,12 @@ INSERT INTO users (
   'admin'
 );
 
-INSERT INTO user_notifications (user_id, message) VALUES 
-  (1, 'Your flight reservation to Berlin has been confirmed.'),
-  (1, 'New promotion: 10% discount on domestic flights!'),
-  (1, 'Your flight to London has been delayed by 30 minutes.'),
-  (1, 'Payment confirmation for reservation no. #1321.'),
-  (1, 'New feature: online check-in is now available!');
+INSERT INTO notifications (id, user_id, message) VALUES
+  (UUID(), @user_id, 'Your flight reservation to Berlin has been confirmed.'),
+  (UUID(), @user_id, 'New promotion: 10% discount on domestic flights!'),
+  (UUID(), @user_id, 'Your flight to London has been delayed by 30 minutes.'),
+  (UUID(), @user_id, 'Payment confirmation for reservation no. #1321.'),
+  (UUID(), @user_id, 'New feature: online check-in is now available!');
 
-INSERT INTO user_reservations (user_id, flight_id) VALUES 
-  (1, 1),
-  (1, 2),
-  (1, 3),
-  (1, 21),
-  (1, 13);
 
 SELECT * FROM users LIMIT 100;

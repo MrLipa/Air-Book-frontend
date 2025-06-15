@@ -4,7 +4,7 @@ const verifyRoles = require('../middlewares/verifyRoles');
 const flightController = require('../controllers/flightController');
 
 const router = Router();
-
+``
 router.get('/getAllFlights', verifyRoles(ROLES_LIST.Admin), flightController.getAllFlights);
 router.post('/searchFlights', flightController.searchFlights);
 router.post('/getFlightsByIds', verifyRoles(ROLES_LIST.Admin), flightController.getFlightsByIds);

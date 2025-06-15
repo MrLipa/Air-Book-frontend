@@ -15,9 +15,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/healthCheck/relationalDatabase",
+							"raw": "{{baseURL}}/healthCheck/relationalDatabase",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"healthCheck",
@@ -33,9 +33,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/healthCheck/neo4jHealth",
+							"raw": "{{baseURL}}/healthCheck/neo4jHealth",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"healthCheck",
@@ -65,9 +65,9 @@
 							"raw": "{\n  \"firstName\": \"Anna\",\n  \"lastName\": \"Kowalska\",\n  \"email\": \"anna.kowalska@example.com\",\n  \"password\": \"StrongPass123!\",\n  \"role\": \"admin\"\n}"
 						},
 						"url": {
-							"raw": "{{BaseURL}}/register",
+							"raw": "{{baseURL}}/register",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"register"
@@ -96,9 +96,9 @@
 							"raw": "{\n  \"email\": \"anna.kowalska@example.com\",\n  \"password\": \"StrongPass123!\"\n}"
 						},
 						"url": {
-							"raw": "{{BaseURL}}/login",
+							"raw": "{{baseURL}}/login",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"login"
@@ -123,9 +123,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{BaseURL}}/refreshToken",
+							"raw": "{{baseURL}}/refreshToken",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"refreshToken"
@@ -145,9 +145,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/logout",
+							"raw": "{{baseURL}}/logout",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"logout"
@@ -169,7 +169,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -177,42 +177,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/user/getAllUsers",
+							"raw": "{{baseURL}}/user/getAllUsers",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"user",
 								"getAllUsers"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/user/getUserIdByEmail/:email",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{Token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BaseURL}}/user/getUserIdByEmail/anna.kowalska@example.com",
-							"host": [
-								"{{BaseURL}}"
-							],
-							"path": [
-								"user",
-								"getUserIdByEmail",
-								"anna.kowalska@example.com"
 							]
 						}
 					},
@@ -226,7 +197,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -234,14 +205,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/user/getUserById/1",
+							"raw": "{{baseURL}}/user/getUserById/{{userId}}",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"user",
 								"getUserById",
-								"1"
+								"{{userId}}"
 							]
 						}
 					},
@@ -255,7 +226,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -263,14 +234,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/user/getNotificationsByUserId/1",
+							"raw": "{{baseURL}}/user/getNotificationsByUserId/{{userId}}",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"user",
 								"getNotificationsByUserId",
-								"1"
+								"{{userId}}"
 							]
 						}
 					},
@@ -284,7 +255,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -298,12 +269,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"securepass123\",\n  \"phone\": \"123456789\",\n  \"image\": \" \",\n  \"address\": \"123 Main St\",\n  \"description\": \"Sample user\",\n  \"role\": \"none\"\n}"
+							"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"securepass123\",\n  \"phone\": \"123456789\",\n  \"image\": \" \",\n  \"address\": \"123 Main St\",\n  \"description\": \"Sample user\",\n  \"role\": \"admin\"\n}"
 						},
 						"url": {
-							"raw": "{{BaseURL}}/user/createNewUser",
+							"raw": "{{baseURL}}/user/createNewUser",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"user",
@@ -321,7 +292,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -335,17 +306,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"password\": \"newpass456\",\n  \"image\": \"new_image_url\",\n  \"phone\": \"987654321\",\n  \"address\": \"456 Elm St\",\n  \"description\": \"Updated description\",\n  \"role\": \"user\"\n}"
+							"raw": "{\n  \"firstName\": \"Xavier\",\n  \"lastName\": \"Venkatanarasimha\",\n  \"email\": \"xavier@gmail.com\",\n  \"password\": \"$2b$10$7AVWkTisyV.w2Hh0g/LYwedlhHAJSBacWhYT2SgGmZC8o/N.LS6j2\",\n  \"image\": \" \",\n  \"phone\": \"+48 213 769 420\",\n  \"address\": \"Alwar, India, Rajasthan\",\n  \"description\": \"Hi, I''m Xavier, your average guy from Earth. You might know me as a meme maker and comedian. I work at a gas station, although for the life of me, I can''t pinpoint its location. Just know it''s somewhere on Earth! I''m also a married man, though my wife seems to think I have a few girlfriends on the side. But you know, wives know everything.\",\n  \"role\": \"admin\"\n}"
 						},
 						"url": {
-							"raw": "{{BaseURL}}/user/updateUserById/3",
+							"raw": "{{baseURL}}/user/updateUserById/{{userId}}",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"user",
 								"updateUserById",
-								"3"
+								"{{userId}}"
 							]
 						}
 					},
@@ -359,7 +330,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -376,14 +347,14 @@
 							"raw": "{\n  \"role\": \"admin\"\n}"
 						},
 						"url": {
-							"raw": "{{BaseURL}}/user/patchUserById/3",
+							"raw": "{{baseURL}}/user/patchUserById/{{userId}}",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"user",
 								"patchUserById",
-								"3"
+								"{{userId}}"
 							]
 						}
 					},
@@ -397,7 +368,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -405,14 +376,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/user/deleteUserById/3",
+							"raw": "{{baseURL}}/user/deleteUserById/{{userId}}",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"user",
 								"deleteUserById",
-								"3"
+								"{{userId}}"
 							]
 						}
 					},
@@ -426,7 +397,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -440,12 +411,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userId\": 1,\n  \"message\": \"Your flight has been updated.\"\n}"
+							"raw": "{\n  \"userId\": {{userId}},\n  \"message\": \"Your flight has been updated.\"\n}"
 						},
 						"url": {
-							"raw": "{{BaseURL}}/user/createNotification",
+							"raw": "{{baseURL}}/user/createNotification",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"user",
@@ -463,7 +434,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -481,12 +452,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userId\": 1,\n  \"flightId\": 1\n}"
+							"raw": "{\n  \"userId\": {{userId}},\n  \"flightId\": {{flightId}}\n}"
 						},
 						"url": {
-							"raw": "{{BaseURL}}/user/createReservation",
+							"raw": "{{baseURL}}/user/createReservation",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"user",
@@ -504,7 +475,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -517,14 +488,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{BaseURL}}/user/deleteReservationById/6",
+							"raw": "{{baseURL}}/user/deleteReservationById/{{reservationId}}",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"user",
 								"deleteReservationById",
-								"6"
+								"{{reservationId}}"
 							]
 						}
 					},
@@ -543,7 +514,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -551,9 +522,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/airport/getAllAirports",
+							"raw": "{{baseURL}}/airport/getAllAirports",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"airport",
@@ -576,7 +547,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -584,9 +555,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/flight/getAllFlights",
+							"raw": "{{baseURL}}/flight/getAllFlights",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"flight",
@@ -614,9 +585,9 @@
 							"raw": "{\n  \"cityFrom\": \"\",\n  \"cityTo\": \"Shanghai\"\n}"
 						},
 						"url": {
-							"raw": "{{BaseURL}}/flight/searchFlights",
+							"raw": "{{baseURL}}/flight/searchFlights",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"flight",
@@ -634,7 +605,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -648,12 +619,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"flightIds\": [1, 1, 2, 3]\n}"
+							"raw": "{\n  \"flightIds\": [{{flightId}}]\n}"
 						},
 						"url": {
-							"raw": "{{BaseURL}}/flight/getFlightsByIds",
+							"raw": "{{baseURL}}/flight/getFlightsByIds",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"flight",
@@ -671,7 +642,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -684,14 +655,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{BaseURL}}/flight/getFlightsByUserId/1",
+							"raw": "{{baseURL}}/flight/getFlightsByUserId/{{userId}}",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"flight",
 								"getFlightsByUserId",
-								"1"
+								"{{userId}}"
 							]
 						}
 					},
@@ -705,7 +676,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{Token}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -722,14 +693,14 @@
 							"raw": "{\n  \"freeSeats\": 13\n}"
 						},
 						"url": {
-							"raw": "{{BaseURL}}/flight/patchFlightById/1",
+							"raw": "{{baseURL}}/flight/patchFlightById/{{flightId}}",
 							"host": [
-								"{{BaseURL}}"
+								"{{baseURL}}"
 							],
 							"path": [
 								"flight",
 								"patchFlightById",
-								"1"
+								"{{flightId}}"
 							]
 						}
 					},

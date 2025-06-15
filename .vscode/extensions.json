@@ -2,18 +2,11 @@
   "recommendations": [
     // === Podstawowe narzędzia ===
     "mikestead.dotenv",                           // Support for .env files
-    "ms-azuretools.vscode-docker",                // Docker support
-    "ms-vscode-remote.remote-containers",         // Dev Containers support
     "redhat.vscode-yaml",                         // YAML support
     "pkief.material-icon-theme",                  // Material Icon Theme
     "ms-vscode-remote.remote-wsl",                // WSL support
     "tamasfe.even-better-toml",                   // TOML support
-    "ms-vscode.makefile-tools",                   // Makefile support
-    "ms-vscode.live-server",                      // Live Server (poprawna nazwa rozszerzenia)
-
-    // === Bazy danych ===
-    "cweijan.dbclient-jdbc",                      // Database client JDBC
-    "cweijan.vscode-database-client2",            // GUI for multiple databases
+    "ritwickdey.liveserver",                      // Live Server (poprawna nazwa rozszerzenia)
 
     // === Python Development ===
     "ms-python.python",                           // Python support
@@ -24,6 +17,7 @@
     "ms-python.flake8",                           // Flake8 linter support
     "ms-toolsai.jupyter",                         // Jupyter notebook support
     "njqdev.vscode-python-typehint",              // Python type hint suggestions
+    "josemurilloc.aura-spirit-dracula",           // Theme with Python support (jeśli to zamierzone)
 
     // === Node.js & Web Development ===
     "dbaeumer.vscode-eslint",                     // ESLint
@@ -36,8 +30,6 @@
     "orta.vscode-jest",                           // Jest test runner
 
     // === Narzędzia uniwersalne ===
-    "formulahendry.code-runner",                  // Code Runner (run code snippets)
-    "insort.insort",     
-    "josemurilloc.aura-spirit-dracula"                          // Auto sort imports for Python
+    "formulahendry.code-runner"                   // Code Runner (run code snippets)
   ]
 }

@@ -6,22 +6,28 @@ require('dotenv').config();
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || !password) return res.status(400).json({ message: 'Email and password are required.' });
+  if (!email || !password) {
+    return res.status(400).json({ code: 400, message: 'Email and password are required.' });
+  }
 
   try {
     const [foundUserQuery] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
 
-    if (foundUserQuery.length === 0) return res.sendStatus(401);
+    if (foundUserQuery.length === 0) {
+      return res.status(401).json({ code: 401, message: 'Invalid email or password.' });
+    }
 
     const user = foundUserQuery[0];
 
     const match = await bcrypt.compare(password, user.password);
 
-    if (!match) return res.sendStatus(401);
+    if (!match) {
+      return res.status(401).json({ code: 401, message: 'Invalid email or password.' });
+    }
 
     const payload = {
       userInfo: {
-        userId: user.user_id,
+        userId: user.id,
         email: user.email,
         role: user.role,
       },
@@ -35,12 +41,12 @@ const loginUser = async (req, res) => {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     });
 
-    const [existingToken] = await pool.execute('SELECT * FROM user_tokens WHERE user_id = ?', [user.user_id]);
+    const [existingToken] = await pool.execute('SELECT * FROM tokens WHERE user_id = ?', [user.id]);
 
     if (existingToken.length === 0) {
-      await pool.execute('INSERT INTO user_tokens (user_id, refresh_token) VALUES (?, ?)', [user.user_id, refreshToken]);
+      await pool.execute('INSERT INTO tokens (id, user_id, refresh_token) VALUES (UUID(), ?, ?)', [user.id, refreshToken]);
     } else {
-      await pool.execute('UPDATE user_tokens SET refresh_token = ? WHERE user_id = ?', [refreshToken, user.user_id]);
+      await pool.execute('UPDATE tokens SET refresh_token = ? WHERE user_id = ?', [refreshToken, user.id]);
     }
 
     res.cookie('jwt', refreshToken, {
@@ -50,13 +56,15 @@ const loginUser = async (req, res) => {
       maxAge: parseInt(process.env.COOKIE_MAX_AGE),
     });
 
-    res.json({
+    return res.status(200).json({
+      code: 200,
+      message: 'Login successful.',
       accessToken,
-      userId: user.user_id,
+      userId: user.id,
       role: user.role,
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ code: 500, message: err.message || 'Internal server error.' });
   }
 };
 

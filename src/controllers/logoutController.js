@@ -5,7 +5,7 @@ const logoutUser = async (req, res) => {
   const cookies = req.cookies;
 
   if (!cookies?.jwt) {
-    return res.sendStatus(204);
+    return res.status(204).json({ message: 'No JWT cookie provided' });
   }
 
   const refreshToken = cookies.jwt;
@@ -13,29 +13,26 @@ const logoutUser = async (req, res) => {
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, decoded) => {
     if (err) {
       res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
-      return res.sendStatus(403);
+      return res.status(403).json({ message: 'Invalid refresh token' });
     }
 
     try {
-      const [foundUser] = await pool.execute(
-        `SELECT * FROM users 
-         JOIN user_tokens USING (user_id) 
-         WHERE refresh_token = ? AND email = ?`,
-        [refreshToken, decoded.userInfo.email]
+      const [foundToken] = await pool.execute(
+        `SELECT * FROM tokens WHERE refresh_token = ?`,
+        [refreshToken]
       );
 
-      if (foundUser.length === 0) {
+      if (foundToken.length === 0) {
         res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
-        return res.status(200).json({ message: 'User logout' });
+        return res.status(200).json({ message: 'User logout (token not found in DB)' });
       }
 
-      await pool.execute('DELETE FROM user_tokens WHERE refresh_token = ?', [refreshToken]);
+      await pool.execute('DELETE FROM tokens WHERE refresh_token = ?', [refreshToken]);
 
       res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
-      return res.status(200).json({ message: 'User logout' });
+      return res.status(200).json({ message: 'User logout successful' });
     } catch (dbErr) {
-      console.error('Logout DB error:', dbErr.message);
-      return res.sendStatus(500);
+      return res.status(500).json({ message: 'Internal server error' });
     }
   });
 };

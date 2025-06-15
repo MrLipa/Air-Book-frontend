@@ -1,26 +1,28 @@
-npm install -g dotenv-cli
-docker compose -f ../docker-compose.yml -e ./env/.env.dev --project-name air_book --profile prod up -d --no-cache --build portainer adminer
-docker compose -f ../docker-compose.yml --project-name air_book up -d --build 
+grafana
+testy performecu
+test integracyjne 
+testy unit
+postman
+dev a prod versia od zmiennej środowiskowej
+doc
+logowanie lepsze
 
 
 
 
 
-zrobić erd
-zrobić readme
-zrobić postmana
-zrobić makefila oraz jak enva ogarnać 
-zrobić oautha
-zrobic uuid
-zrobić indexy
-zrobić mysql
-zrobić grafane
-ogarnać 
-DBDiagram 
+
 Isort (Python) 
 MyPy (Python) 
 Black (Python) 
 Pre-Commit 
+plik z configuracją 
+logging middleware
+middlrware so sprawdzani usera
+struktura fast api
+apload websocketem file exel
+parsery
+exporter
 
 zrobić fast api
 
