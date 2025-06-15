@@ -707,6 +707,28 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "monitoring",
+			"item": [
+				{
+					"name": "/metrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/metrics",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"metrics"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
