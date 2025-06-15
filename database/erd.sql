@@ -21,6 +21,7 @@ CREATE TABLE notifications (
   id CHAR(36) PRIMARY KEY,
   user_id CHAR(36) NOT NULL,
   message VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
@@ -57,12 +58,12 @@ INSERT INTO users (
   'admin'
 );
 
-INSERT INTO notifications (id, user_id, message) VALUES
-  (UUID(), @user_id, 'Your flight reservation to Berlin has been confirmed.'),
-  (UUID(), @user_id, 'New promotion: 10% discount on domestic flights!'),
-  (UUID(), @user_id, 'Your flight to London has been delayed by 30 minutes.'),
-  (UUID(), @user_id, 'Payment confirmation for reservation no. #1321.'),
-  (UUID(), @user_id, 'New feature: online check-in is now available!');
+INSERT INTO notifications (id, user_id, message, created_at) VALUES
+  (UUID(), @user_id, 'Your flight reservation to Berlin has been confirmed.', '2010-04-10 00:00:00'),
+  (UUID(), @user_id, 'New promotion: 10% discount on domestic flights!', '2010-04-10 01:00:00'),
+  (UUID(), @user_id, 'Your flight to London has been delayed by 30 minutes.', '2010-04-10 02:00:00'),
+  (UUID(), @user_id, 'Payment confirmation for reservation no. #1321.', '2010-04-10 03:00:00'),
+  (UUID(), @user_id, 'New feature: online check-in is now available!', '2010-04-10 04:00:00');
 
 
 SELECT * FROM users LIMIT 100;

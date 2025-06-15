@@ -165,13 +165,13 @@ const getFlightsByUserId = async (req, res) => {
         destinationCountry: record.get("destination_country"),
         destinationCity: record.get("destination_city"),
         destinationImage: record.get("destination_image"),
-        distance: record.get("distance"),
+        distance: record.get("distance").low,
         date: record.get("date"),
-        price: record.get("price"),
+        price: record.get("price").low,
         duration: record.get("duration"),
         airlines: record.get("airlines"),
         flightClass: record.get("class"),
-        freeSeats: record.get("free_seats"),
+        freeSeats: record.get("free_seats").low,
       };
     }
 

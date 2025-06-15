@@ -208,15 +208,24 @@ const deleteReservationById = async (req, res) => {
 const getNotificationsByUserId = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const [dbResult] = await pool.execute('SELECT message FROM notifications WHERE user_id = ?', [userId]);
+    const [dbResult] = await pool.execute(
+      'SELECT message, created_at FROM notifications WHERE user_id = ? ORDER BY created_at DESC',
+      [userId]
+    );
     if (dbResult.length === 0) {
       return res.json([]);
     }
-    res.status(200).json(dbResult.map((row) => row.message));
+    res.status(200).json(
+      dbResult.map((row) => ({
+        message: row.message,
+        created_at: row.created_at
+      }))
+    );
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
+
 
 module.exports = {
   getAllUsers,
