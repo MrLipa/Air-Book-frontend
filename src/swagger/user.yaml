@@ -8,23 +8,6 @@ getAllUsers:
       '200':
         description: List of users
 
-getUserIdByEmail:
-  get:
-    tags: [User]
-    summary: Get user ID by email
-    parameters:
-      - in: path
-        name: email
-        required: true
-        schema:
-          type: string
-          format: email
-    security:
-      - bearerAuth: []
-    responses:
-      '200':
-        description: User ID found
-
 getUserById:
   get:
     tags: [User]

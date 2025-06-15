@@ -28,8 +28,8 @@ help:
 	@echo -e "  $(GREEN)make lint-fix$(RESET)             - Lint code and auto-fix issues"
 	@echo -e "  $(GREEN)make format$(RESET)               - Format code using Prettier"
 	@echo -e "  $(GREEN)make docs$(RESET)                 - Generate documentation using TypeDoc"
-	@echo -e "  $(GREEN)make clean$(RESET)                - Remove temporary files, caches and logs"
 	@echo -e "  $(GREEN)make logs$(RESET)                 - Display application logs"
+	@echo -e "  $(GREEN)make clean$(RESET)                - Remove temporary files, caches and logs"
 	@echo -e "  $(GREEN)make docker-clean$(RESET)         - Remove all containers, images, volumes, and networks"
 	@echo -e "  $(GREEN)make docker-up$(RESET)            - Build and start Docker containers"
 	@echo -e "       Example: make docker-up services=\"mysql adminer\""
@@ -82,15 +82,15 @@ docs:
 	@echo -e "$(GREEN)Generating documentation with TypeDoc...$(RESET)"
 	npm run docs
 
+logs:
+	@echo -e "$(GREEN)Tailing application logs...$(RESET)"
+	tail -f $(LOGS_DIR)/*.log
+
 clean:
 	@echo -e "$(GREEN)Cleaning temporary files, caches, and logs...$(RESET)"
 	find . -type d -name '__pycache__' -exec rm -r {} + 2>/dev/null || true
 	find . -type f -name '*.log' -delete
 	rm -rf $(LOGS_DIR)/* 2>/dev/null || true
-
-logs:
-	@echo -e "$(GREEN)Tailing application logs...$(RESET)"
-	tail -f $(LOGS_DIR)/*.log
 
 docker-clean:
 	@echo -e "$(GREEN)Cleaning all Docker containers, images, volumes, and networks...$(RESET)"

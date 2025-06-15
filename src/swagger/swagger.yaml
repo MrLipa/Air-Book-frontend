@@ -40,8 +40,6 @@ paths:
 
   /user/getAllUsers:
     $ref: './user.yaml#/getAllUsers'
-  /user/getUserIdByEmail/{email}:
-    $ref: './user.yaml#/getUserIdByEmail'
   /user/getUserById/{userId}:
     $ref: './user.yaml#/getUserById'
   /user/getNotificationsByUserId/{userId}:

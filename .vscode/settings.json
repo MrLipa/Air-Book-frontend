@@ -17,6 +17,7 @@
   "material-icon-theme.folders.associations": {
     "swagger": "api",
     "unit": "test",
+    "monitoring": "resource",
     "postman": "resource"
   },
   "material-icon-theme.hidesExplorerArrows": true,
