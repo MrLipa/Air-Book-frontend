@@ -16,13 +16,13 @@ const getAllFlights = async (req, res) => {
       destinationCountry: record.get('b.country'),
       destinationCity: record.get('b.city'),
       destinationImage: record.get('b.image'),
-      distance: record.get('r.distance'),
+      distance: record.get('r.distance').low,
       date: record.get('r.date'),
-      price: record.get('r.price'),
+      price: record.get('r.price').low,
       duration: record.get('r.duration'),
       airlines: record.get('r.airlines'),
       flightClass: record.get('r.class'),
-      freeSeats: record.get('r.free_seats'),
+      freeSeats: record.get('r.free_seats').low,
     }));
 
     res.status(200).json(flights);
@@ -77,13 +77,13 @@ const searchFlights = async (req, res) => {
       destinationCountry: record.get('b.country'),
       destinationCity: record.get('b.city'),
       destinationImage: record.get('b.image'),
-      distance: record.get('r.distance'),
+      distance: record.get('r.distance').low,
       date: record.get('r.date'),
-      price: record.get('r.price'),
+      price: record.get('r.price').low,
       duration: record.get('r.duration'),
       airlines: record.get('r.airlines'),
       flightClass: record.get('r.class'),
-      freeSeats: record.get('r.free_seats'),
+      freeSeats: record.get('r.free_seats').low,
     }));
 
     res.status(200).json(flights);
@@ -111,13 +111,13 @@ const getFlightsByIds = async (req, res) => {
       destinationCountry: record.get('b.country'),
       destinationCity: record.get('b.city'),
       destinationImage: record.get('b.image'),
-      distance: record.get('r.distance'),
+      distance: record.get('r.distance').low,
       date: record.get('r.date'),
-      price: record.get('r.price'),
+      price: record.get('r.price').low,
       duration: record.get('r.duration'),
       airlines: record.get('r.airlines'),
       flightClass: record.get('r.class'),
-      freeSeats: record.get('r.free_seats'),
+      freeSeats: record.get('r.free_seats').low,
     }));
 
     res.status(200).json(flights);
