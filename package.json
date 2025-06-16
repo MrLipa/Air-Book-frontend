@@ -17,6 +17,7 @@
   "author": "Tomasz Szkaradek",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.10.0",
     "bcrypt": "^5.1.0",
     "chai": "^5.2.0",
     "cookie-parser": "^1.4.6",

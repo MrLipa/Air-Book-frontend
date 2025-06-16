@@ -39,7 +39,7 @@ help:
 	@echo -e "       Example: make docker-down services=portainer profile=prod"
 
 git-commit:
-	git add --all && git commit -m"little changes"
+	git add --all && git commit -m"little changes" && git push
 
 install:
 	@echo -e "$(GREEN)Installing backend dependencies...$(RESET)"
