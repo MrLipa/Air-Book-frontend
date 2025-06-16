@@ -3,10 +3,10 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 require('dotenv').config();
 
-const FACEBOOK_CLIENT_ID = "481981307523758";
-const FACEBOOK_CLIENT_SECRET = "b98c2c23b899d4f74c6234be9c6433ca";
-const REDIRECT_URI = "http://localhost:3000/api/auth/facebook/callback";
-const FRONTEND_URL = "http://localhost:5173";
+const FACEBOOK_CLIENT_ID = process.env.FACEBOOK_CLIENT_ID;
+const FACEBOOK_CLIENT_SECRET = process.env.FACEBOOK_CLIENT_SECRET;
+const REDIRECT_URI = process.env.FACEBOOK_REDIRECT_URI;
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const facebookCallback = async (req, res) => {
   const code = req.query.code;
@@ -44,10 +44,10 @@ const facebookCallback = async (req, res) => {
           userData.last_name || "User",
           userData.email,
           fakePassword,
-          'user'
+          'admin'
         ]
       );
-      user = { id: userId, email: userData.email, role: 'user' };
+      user = { id: userId, email: userData.email, role: 'admin' };
     } else {
       user = foundUserQuery[0];
     }
