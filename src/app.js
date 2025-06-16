@@ -54,6 +54,7 @@ app.use('/register', require('./routes/register'));
 app.use('/login', require('./routes/login'));
 app.use('/refreshToken', require('./routes/refreshToken'));
 app.use('/logout', require('./routes/logout'));
+app.use('/api/auth', require('./routes/oauth2'));
 
 // Protected Routes
 app.use('/airport', verifyJWT, require('./routes/airport'));
