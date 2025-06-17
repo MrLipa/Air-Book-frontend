@@ -1,0 +1,129 @@
+services:
+  loki:
+    image: grafana/loki:3.4.4
+    container_name: loki-dev
+    restart: always
+    ports:
+      - 3100:3100
+    networks:
+      - app-network
+
+  promtail:
+    image: grafana/promtail:3.4.4
+    container_name: promtail-dev
+    restart: always
+    volumes:
+      - ./backend/docker/promtail-config.yaml:/etc/promtail/config.yaml
+      - ./backend/logs:/var/log/backend
+    command: -config.file=/etc/promtail/config.yaml
+    depends_on:
+      - loki
+    networks:
+      - app-network
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus-dev
+    ports:
+      - 9090:9090
+    volumes:
+      - ./backend/docker/prometheus.yaml:/etc/prometheus/prometheus.yml
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  grafana:
+    image: grafana/grafana:12.0.1
+    container_name: grafana-dev
+    restart: always
+    ports:
+      - 3001:3000
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    networks:
+      - app-network
+
+  portainer:
+    image: portainer/portainer-ce:2.30.0
+    restart: always
+    container_name: portainer-dev
+    privileged: true
+    ports:
+      - 9443:9443
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - app-network
+
+  adminer:
+    image: adminer:5.3.0
+    restart: always
+    container_name: adminer-dev
+    privileged: true
+    ports:
+      - 82:8080
+    networks:
+      - app-network
+
+  mysql:
+    build:
+      context: .
+      dockerfile: ./docker/mysql.dev.Dockerfile
+    user: root
+    restart: always
+    container_name: mysql-dev
+    privileged: true
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - 3306:3306
+    networks:
+      - app-network
+
+  neo4j:
+    build:
+      context: .
+      dockerfile: ./docker/neo4j.dev.Dockerfile
+    user: root
+    restart: always
+    container_name: neo4j-dev
+    privileged: true
+    ports:
+      - 7687:7687
+      - 7474:7474
+      - 7473:7473
+    command: ['./init-neo4j.sh']
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/backend.Dockerfile
+    user: root
+    restart: always
+    container_name: backend-dev
+    privileged: true
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql
+      - neo4j
+    volumes:
+      - ./backend/src:/usr/src/app/src
+    networks: 
+      - app-network
+
+volumes:
+  portainer_data:
+  grafana_data:
+
+networks:
+  app-network:
+    driver: bridge

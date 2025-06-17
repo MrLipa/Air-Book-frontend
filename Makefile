@@ -38,6 +38,9 @@ help:
 	@echo -e "       Example: make docker-down"
 	@echo -e "       Example: make docker-down services=portainer profile=prod"
 
+gpg -c .env
+gpg -d .env.gpg > .env
+
 git-commit:
 	git add --all && git commit -m"little changes" && git push
 
