@@ -10,17 +10,14 @@ const logoutUser = async (req, res) => {
 
   const refreshToken = cookies.jwt;
 
-  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, decoded) => {
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err) => {
     if (err) {
       res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
       return res.status(403).json({ message: 'Invalid refresh token' });
     }
 
     try {
-      const [foundToken] = await pool.execute(
-        `SELECT * FROM tokens WHERE refresh_token = ?`,
-        [refreshToken]
-      );
+      const [foundToken] = await pool.execute(`SELECT * FROM tokens WHERE refresh_token = ?`, [refreshToken]);
 
       if (foundToken.length === 0) {
         res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
@@ -31,7 +28,7 @@ const logoutUser = async (req, res) => {
 
       res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
       return res.status(200).json({ message: 'User logout successful' });
-    } catch (dbErr) {
+    } catch {
       return res.status(500).json({ message: 'Internal server error' });
     }
   });

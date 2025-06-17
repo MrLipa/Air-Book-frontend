@@ -2,7 +2,7 @@ const { pool } = require('../config/db');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 require('dotenv').config();
-const axios = require("axios");
+const axios = require('axios');
 
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
@@ -28,39 +28,25 @@ const facebookCallback = async (req, res) => {
   if (!code) return res.redirect(`${FRONTEND_URL}/oauth-fail?reason=missing_code`);
 
   try {
-    const tokenResp = await fetch(
-      `https://graph.facebook.com/v19.0/oauth/access_token?client_id=${FACEBOOK_CLIENT_ID}&redirect_uri=${encodeURIComponent(FACEBOOK_REDIRECT_URI)}&client_secret=${FACEBOOK_CLIENT_SECRET}&code=${code}`
-    );
+    const tokenResp = await fetch(`https://graph.facebook.com/v19.0/oauth/access_token?client_id=${FACEBOOK_CLIENT_ID}&redirect_uri=${encodeURIComponent(FACEBOOK_REDIRECT_URI)}&client_secret=${FACEBOOK_CLIENT_SECRET}&code=${code}`);
     const tokenData = await tokenResp.json();
     if (!tokenData.access_token) return res.redirect(`${FRONTEND_URL}/oauth-fail?reason=token_error`);
 
-    const userResp = await fetch(
-      `https://graph.facebook.com/me?fields=id,email,first_name,last_name&access_token=${tokenData.access_token}`
-    );
+    const userResp = await fetch(`https://graph.facebook.com/me?fields=id,email,first_name,last_name&access_token=${tokenData.access_token}`);
     const userData = await userResp.json();
     if (!userData.email) return res.redirect(`${FRONTEND_URL}/oauth-fail?reason=no_email`);
 
-    const [foundUserQuery] = await pool.execute(
-      'SELECT * FROM users WHERE email = ?',
-      [userData.email]
-    );
+    const [foundUserQuery] = await pool.execute('SELECT * FROM users WHERE email = ?', [userData.email]);
 
     let user;
     if (foundUserQuery.length === 0) {
       const userId = crypto.randomUUID();
       const fakePassword = crypto.randomUUID();
       await pool.execute(
-        `INSERT INTO users 
-         (id, first_name, last_name, email, password, role) 
+        `INSERT INTO users
+         (id, first_name, last_name, email, password, role)
          VALUES (?, ?, ?, ?, ?, ?)`,
-        [
-          userId,
-          userData.first_name || "Facebook",
-          userData.last_name || "User",
-          userData.email,
-          fakePassword,
-          'admin'
-        ]
+        [userId, userData.first_name || 'Facebook', userData.last_name || 'User', userData.email, fakePassword, 'admin']
       );
       user = { id: userId, email: userData.email, role: 'admin' };
     } else {
@@ -72,7 +58,7 @@ const facebookCallback = async (req, res) => {
         userId: user.id,
         email: user.email,
         role: user.role,
-      }
+      },
     };
 
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
@@ -85,15 +71,9 @@ const facebookCallback = async (req, res) => {
 
     const [existingToken] = await pool.execute('SELECT * FROM tokens WHERE user_id = ?', [user.id]);
     if (existingToken.length === 0) {
-      await pool.execute(
-        'INSERT INTO tokens (id, user_id, refresh_token) VALUES (UUID(), ?, ?)',
-        [user.id, refreshToken]
-      );
+      await pool.execute('INSERT INTO tokens (id, user_id, refresh_token) VALUES (UUID(), ?, ?)', [user.id, refreshToken]);
     } else {
-      await pool.execute(
-        'UPDATE tokens SET refresh_token = ? WHERE user_id = ?',
-        [refreshToken, user.id]
-      );
+      await pool.execute('UPDATE tokens SET refresh_token = ? WHERE user_id = ?', [refreshToken, user.id]);
     }
 
     res.cookie('jwt', refreshToken, {
@@ -103,10 +83,7 @@ const facebookCallback = async (req, res) => {
       maxAge: parseInt(process.env.COOKIE_MAX_AGE),
     });
 
-    return res.redirect(
-      `${FRONTEND_URL}/oauth-success?accessToken=${accessToken}&userId=${user.id}&role=${user.role}`
-    );
-
+    return res.redirect(`${FRONTEND_URL}/oauth-success?accessToken=${accessToken}&userId=${user.id}&role=${user.role}`);
   } catch (err) {
     console.error(err);
     return res.redirect(`${FRONTEND_URL}/oauth-fail?reason=server_error`);
@@ -118,55 +95,38 @@ const linkedinCallback = async (req, res) => {
   if (!code) return res.redirect(`${FRONTEND_URL}/oauth-fail?reason=missing_code`);
 
   try {
-    const tokenRes = await axios.post(
-      "https://www.linkedin.com/oauth/v2/accessToken",
-      null,
-      {
-        params: {
-          grant_type: "authorization_code",
-          code,
-          redirect_uri: LINKEDIN_REDIRECT_URI,
-          client_id: LINKEDIN_CLIENT_ID,
-          client_secret: LINKEDIN_CLIENT_SECRET,
-        },
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+    const tokenRes = await axios.post('https://www.linkedin.com/oauth/v2/accessToken', null, {
+      params: {
+        grant_type: 'authorization_code',
+        code,
+        redirect_uri: LINKEDIN_REDIRECT_URI,
+        client_id: LINKEDIN_CLIENT_ID,
+        client_secret: LINKEDIN_CLIENT_SECRET,
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
     const access_token = tokenRes.data.access_token;
 
-    const userRes = await axios.get(
-      "https://api.linkedin.com/v2/userinfo",
-      {
-        headers: { Authorization: `Bearer ${access_token}` },
-      }
-    );
+    const userRes = await axios.get('https://api.linkedin.com/v2/userinfo', {
+      headers: { Authorization: `Bearer ${access_token}` },
+    });
     const { given_name, family_name, email } = userRes.data;
 
     if (!email) return res.redirect(`${FRONTEND_URL}/oauth-fail?reason=no_email`);
 
-    const [foundUserQuery] = await pool.execute(
-      'SELECT * FROM users WHERE email = ?',
-      [email]
-    );
+    const [foundUserQuery] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
 
     let user;
     if (foundUserQuery.length === 0) {
       const userId = crypto.randomUUID();
       const fakePassword = crypto.randomUUID();
       await pool.execute(
-        `INSERT INTO users 
-         (id, first_name, last_name, email, password, role) 
+        `INSERT INTO users
+         (id, first_name, last_name, email, password, role)
          VALUES (?, ?, ?, ?, ?, ?)`,
-        [
-          userId,
-          given_name || "LinkedIn",
-          family_name || "User",
-          email,
-          fakePassword,
-          'admin'
-        ]
+        [userId, given_name || 'LinkedIn', family_name || 'User', email, fakePassword, 'admin']
       );
       user = { id: userId, email: email, role: 'admin' };
     } else {
@@ -178,7 +138,7 @@ const linkedinCallback = async (req, res) => {
         userId: user.id,
         email: user.email,
         role: user.role,
-      }
+      },
     };
 
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
@@ -190,15 +150,9 @@ const linkedinCallback = async (req, res) => {
 
     const [existingToken] = await pool.execute('SELECT * FROM tokens WHERE user_id = ?', [user.id]);
     if (existingToken.length === 0) {
-      await pool.execute(
-        'INSERT INTO tokens (id, user_id, refresh_token) VALUES (UUID(), ?, ?)',
-        [user.id, refreshToken]
-      );
+      await pool.execute('INSERT INTO tokens (id, user_id, refresh_token) VALUES (UUID(), ?, ?)', [user.id, refreshToken]);
     } else {
-      await pool.execute(
-        'UPDATE tokens SET refresh_token = ? WHERE user_id = ?',
-        [refreshToken, user.id]
-      );
+      await pool.execute('UPDATE tokens SET refresh_token = ? WHERE user_id = ?', [refreshToken, user.id]);
     }
 
     res.cookie('jwt', refreshToken, {
@@ -208,12 +162,9 @@ const linkedinCallback = async (req, res) => {
       maxAge: parseInt(process.env.COOKIE_MAX_AGE),
     });
 
-    return res.redirect(
-      `${FRONTEND_URL}/oauth-success?accessToken=${accessToken}&userId=${user.id}&role=${user.role}`
-    );
-
+    return res.redirect(`${FRONTEND_URL}/oauth-success?accessToken=${accessToken}&userId=${user.id}&role=${user.role}`);
   } catch (err) {
-    console.error("LinkedIn login error:", err.response?.data || err.message || err);
+    console.error('LinkedIn login error:', err.response?.data || err.message || err);
     return res.redirect(`${FRONTEND_URL}/oauth-fail?reason=server_error`);
   }
 };
@@ -232,7 +183,7 @@ const githubCallback = async (req, res) => {
         redirect_uri: GITHUB_REDIRECT_URI,
       },
       {
-        headers: { Accept: 'application/json' }
+        headers: { Accept: 'application/json' },
       }
     );
     const access_token = tokenResp.data.access_token;
@@ -241,41 +192,31 @@ const githubCallback = async (req, res) => {
     }
 
     const userResp = await axios.get('https://api.github.com/user', {
-      headers: { Authorization: `Bearer ${access_token}` }
+      headers: { Authorization: `Bearer ${access_token}` },
     });
 
     const emailsResp = await axios.get('https://api.github.com/user/emails', {
-      headers: { Authorization: `Bearer ${access_token}` }
+      headers: { Authorization: `Bearer ${access_token}` },
     });
-    const primaryEmailObj = emailsResp.data.find(e => e.primary && e.verified);
+    const primaryEmailObj = emailsResp.data.find((e) => e.primary && e.verified);
     const email = primaryEmailObj ? primaryEmailObj.email : null;
 
     if (!email) return res.redirect(`${FRONTEND_URL}/oauth-fail?reason=no_email`);
 
-    const [foundUserQuery] = await pool.execute(
-      'SELECT * FROM users WHERE email = ?',
-      [email]
-    );
+    const [foundUserQuery] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
 
     let user;
     if (foundUserQuery.length === 0) {
       const userId = crypto.randomUUID();
       const fakePassword = crypto.randomUUID();
       const nameParts = userResp.data.name ? userResp.data.name.split(' ') : [];
-      const firstName = nameParts[0] || "GitHub";
-      const lastName = nameParts.slice(1).join(' ') || "User";
+      const firstName = nameParts[0] || 'GitHub';
+      const lastName = nameParts.slice(1).join(' ') || 'User';
       await pool.execute(
-        `INSERT INTO users 
-         (id, first_name, last_name, email, password, role) 
+        `INSERT INTO users
+         (id, first_name, last_name, email, password, role)
          VALUES (?, ?, ?, ?, ?, ?)`,
-        [
-          userId,
-          firstName,
-          lastName,
-          email,
-          fakePassword,
-          'admin'
-        ]
+        [userId, firstName, lastName, email, fakePassword, 'admin']
       );
       user = { id: userId, email: email, role: 'admin' };
     } else {
@@ -287,7 +228,7 @@ const githubCallback = async (req, res) => {
         userId: user.id,
         email: user.email,
         role: user.role,
-      }
+      },
     };
 
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
@@ -299,15 +240,9 @@ const githubCallback = async (req, res) => {
 
     const [existingToken] = await pool.execute('SELECT * FROM tokens WHERE user_id = ?', [user.id]);
     if (existingToken.length === 0) {
-      await pool.execute(
-        'INSERT INTO tokens (id, user_id, refresh_token) VALUES (UUID(), ?, ?)',
-        [user.id, refreshToken]
-      );
+      await pool.execute('INSERT INTO tokens (id, user_id, refresh_token) VALUES (UUID(), ?, ?)', [user.id, refreshToken]);
     } else {
-      await pool.execute(
-        'UPDATE tokens SET refresh_token = ? WHERE user_id = ?',
-        [refreshToken, user.id]
-      );
+      await pool.execute('UPDATE tokens SET refresh_token = ? WHERE user_id = ?', [refreshToken, user.id]);
     }
 
     res.cookie('jwt', refreshToken, {
@@ -317,12 +252,9 @@ const githubCallback = async (req, res) => {
       maxAge: parseInt(process.env.COOKIE_MAX_AGE),
     });
 
-    return res.redirect(
-      `${FRONTEND_URL}/oauth-success?accessToken=${accessToken}&userId=${user.id}&role=${user.role}`
-    );
-
+    return res.redirect(`${FRONTEND_URL}/oauth-success?accessToken=${accessToken}&userId=${user.id}&role=${user.role}`);
   } catch (err) {
-    console.error("GitHub login error:", err.response?.data || err.message || err);
+    console.error('GitHub login error:', err.response?.data || err.message || err);
     return res.redirect(`${FRONTEND_URL}/oauth-fail?reason=server_error`);
   }
 };
@@ -340,31 +272,24 @@ const azureCallback = async (req, res) => {
     params.append('grant_type', 'authorization_code');
     params.append('client_secret', AZURE_CLIENT_SECRET);
 
-    const tokenResp = await axios.post(
-      `https://login.microsoftonline.com/${AZURE_TENANT_ID}/oauth2/token`,
-      params.toString(),
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json'
-        }
-      }
-    );
+    const tokenResp = await axios.post(`https://login.microsoftonline.com/${AZURE_TENANT_ID}/oauth2/token`, params.toString(), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/json',
+      },
+    });
 
     const access_token = tokenResp.data.access_token;
     if (!access_token) {
       return res.redirect(`${FRONTEND_URL}/oauth-fail?reason=token_error`);
     }
 
-    const userResp = await axios.get(
-      'https://graph.microsoft.com/v1.0/me',
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-          Accept: 'application/json'
-        }
-      }
-    );
+    const userResp = await axios.get('https://graph.microsoft.com/v1.0/me', {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        Accept: 'application/json',
+      },
+    });
     const userData = userResp.data;
 
     let email = userData.mail;
@@ -383,26 +308,16 @@ const azureCallback = async (req, res) => {
     const firstName = userData.givenName || 'Azure';
     const lastName = userData.surname || 'User';
 
-    const [foundUserQuery] = await pool.execute(
-      'SELECT * FROM users WHERE email = ?',
-      [email]
-    );
+    const [foundUserQuery] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
     let user;
     if (foundUserQuery.length === 0) {
       const userId = crypto.randomUUID();
       const fakePassword = crypto.randomUUID();
       await pool.execute(
-        `INSERT INTO users 
-         (id, first_name, last_name, email, password, role) 
+        `INSERT INTO users
+         (id, first_name, last_name, email, password, role)
          VALUES (?, ?, ?, ?, ?, ?)`,
-        [
-          userId,
-          firstName,
-          lastName,
-          email,
-          fakePassword,
-          'admin'
-        ]
+        [userId, firstName, lastName, email, fakePassword, 'admin']
       );
       user = { id: userId, email: email, role: 'admin' };
     } else {
@@ -414,7 +329,7 @@ const azureCallback = async (req, res) => {
         userId: user.id,
         email: user.email,
         role: user.role,
-      }
+      },
     };
 
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
@@ -426,15 +341,9 @@ const azureCallback = async (req, res) => {
 
     const [existingToken] = await pool.execute('SELECT * FROM tokens WHERE user_id = ?', [user.id]);
     if (existingToken.length === 0) {
-      await pool.execute(
-        'INSERT INTO tokens (id, user_id, refresh_token) VALUES (UUID(), ?, ?)',
-        [user.id, refreshToken]
-      );
+      await pool.execute('INSERT INTO tokens (id, user_id, refresh_token) VALUES (UUID(), ?, ?)', [user.id, refreshToken]);
     } else {
-      await pool.execute(
-        'UPDATE tokens SET refresh_token = ? WHERE user_id = ?',
-        [refreshToken, user.id]
-      );
+      await pool.execute('UPDATE tokens SET refresh_token = ? WHERE user_id = ?', [refreshToken, user.id]);
     }
 
     res.cookie('jwt', refreshToken, {
@@ -444,12 +353,9 @@ const azureCallback = async (req, res) => {
       maxAge: parseInt(process.env.COOKIE_MAX_AGE),
     });
 
-    return res.redirect(
-      `${FRONTEND_URL}/oauth-success?accessToken=${accessToken}&userId=${user.id}&role=${user.role}`
-    );
-
+    return res.redirect(`${FRONTEND_URL}/oauth-success?accessToken=${accessToken}&userId=${user.id}&role=${user.role}`);
   } catch (err) {
-    console.error("Azure login error:", err.response?.data || err.message || err);
+    console.error('Azure login error:', err.response?.data || err.message || err);
     return res.redirect(`${FRONTEND_URL}/oauth-fail?reason=server_error`);
   }
 };

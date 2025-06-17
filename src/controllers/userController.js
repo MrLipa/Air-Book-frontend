@@ -164,10 +164,7 @@ const createNotification = async (req, res) => {
       return res.status(400).json({ message: 'userId and message are required.' });
     }
     const notificationId = uuidv4();
-    await pool.execute(
-      `INSERT INTO notifications (id, user_id, message) VALUES (?, ?, ?)`,
-      [notificationId, userId, message]
-    );
+    await pool.execute(`INSERT INTO notifications (id, user_id, message) VALUES (?, ?, ?)`, [notificationId, userId, message]);
     res.status(201).json({ message: 'Notification created', notificationId });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -181,10 +178,7 @@ const createReservation = async (req, res) => {
       return res.status(400).json({ message: 'userId and flightId are required' });
     }
     const reservationId = uuidv4();
-    await pool.execute(
-      `INSERT INTO reservations (id, user_id, flight_id) VALUES (?, ?, ?)`,
-      [reservationId, userId, flightId]
-    );
+    await pool.execute(`INSERT INTO reservations (id, user_id, flight_id) VALUES (?, ?, ?)`, [reservationId, userId, flightId]);
     res.status(201).json({ message: 'Reservation created', reservationId });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -208,24 +202,20 @@ const deleteReservationById = async (req, res) => {
 const getNotificationsByUserId = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const [dbResult] = await pool.execute(
-      'SELECT message, created_at FROM notifications WHERE user_id = ? ORDER BY created_at DESC',
-      [userId]
-    );
+    const [dbResult] = await pool.execute('SELECT message, created_at FROM notifications WHERE user_id = ? ORDER BY created_at DESC', [userId]);
     if (dbResult.length === 0) {
       return res.json([]);
     }
     res.status(200).json(
       dbResult.map((row) => ({
         message: row.message,
-        created_at: row.created_at
+        created_at: row.created_at,
       }))
     );
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 module.exports = {
   getAllUsers,

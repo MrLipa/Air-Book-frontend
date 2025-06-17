@@ -6,9 +6,7 @@ const verifyJwt = (req, res, next) => {
   const { authorization } = req.headers;
   const { originalUrl, method } = req;
 
-  const isExcluded = allowedRoutes.some(
-    (route) => route.path === originalUrl && route.method.toUpperCase() === method.toUpperCase()
-  );
+  const isExcluded = allowedRoutes.some((route) => route.path === originalUrl && route.method.toUpperCase() === method.toUpperCase());
 
   if (isExcluded) {
     return next();

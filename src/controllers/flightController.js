@@ -156,22 +156,22 @@ const getFlightsByUserId = async (req, res) => {
 
     const flightsMap = {};
     for (const record of result.records) {
-      const flightId = record.get("id");
+      const flightId = record.get('id');
       flightsMap[flightId] = {
         id: flightId,
-        originCountry: record.get("origin_country"),
-        originCity: record.get("origin_city"),
-        originImage: record.get("origin_image"),
-        destinationCountry: record.get("destination_country"),
-        destinationCity: record.get("destination_city"),
-        destinationImage: record.get("destination_image"),
-        distance: record.get("distance").low,
-        date: record.get("date"),
-        price: record.get("price").low,
-        duration: record.get("duration"),
-        airlines: record.get("airlines"),
-        flightClass: record.get("class"),
-        freeSeats: record.get("free_seats").low,
+        originCountry: record.get('origin_country'),
+        originCity: record.get('origin_city'),
+        originImage: record.get('origin_image'),
+        destinationCountry: record.get('destination_country'),
+        destinationCity: record.get('destination_city'),
+        destinationImage: record.get('destination_image'),
+        distance: record.get('distance').low,
+        date: record.get('date'),
+        price: record.get('price').low,
+        duration: record.get('duration'),
+        airlines: record.get('airlines'),
+        flightClass: record.get('class'),
+        freeSeats: record.get('free_seats').low,
       };
     }
 

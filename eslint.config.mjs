@@ -4,7 +4,7 @@ import prettier from 'eslint-config-prettier';
 
 export default defineConfig([
   {
-    files: ['**/*.{js,cjs,mjs}'],
+    files: ['src/**/*.{js,cjs,mjs}'],
     ignores: ['node_modules', 'dist', 'docs', 'coverage'],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -14,7 +14,7 @@ export default defineConfig([
     rules: {
       semi: ['error', 'always'],
       quotes: ['error', 'double'],
-      'no-unused-vars': 'warn',
+      "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }], // <-- tylko ta linia!
       'no-console': 'off',
       'max-len': ['warn', { code: 100 }],
       indent: ['error', 2],

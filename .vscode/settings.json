@@ -18,7 +18,8 @@
     "swagger": "api",
     "unit": "test",
     "monitoring": "resource",
-    "postman": "resource"
+    "postman": "resource",
+    "alembic": "resource"
   },
   "material-icon-theme.hidesExplorerArrows": true,
 

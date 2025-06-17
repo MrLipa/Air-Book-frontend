@@ -51,7 +51,7 @@ const refreshToken = async (req, res) => {
     } catch (err) {
       return res.status(500).json({
         code: 500,
-        message: err.message || 'Internal server error'
+        message: err.message || 'Internal server error',
       });
     }
   });

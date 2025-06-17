@@ -15,21 +15,14 @@ const logFormat = printf(({ level, message, timestamp }) => {
 const logger = createLogger({
   levels: { error: 0, warn: 1, info: 2, http: 3, debug: 4 },
   level: process.env.LOG_LEVEL || 'debug',
-  format: combine(
-    timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    logFormat
-  ),
+  format: combine(timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), logFormat),
   transports: [
     new transports.File({
       filename: path.join(logsDir, 'node.log'),
       level: 'debug',
     }),
     new transports.Console({
-      format: combine(
-        colorize(),
-        timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-        logFormat
-      ),
+      format: combine(colorize(), timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), logFormat),
     }),
   ],
 });
