@@ -15,6 +15,8 @@ profile ?= dev
 services ?= all
 nc ?= false
 
+name ?= .env
+
 help:
 	@echo -e "$(YELLOW)Available commands:$(RESET)"
 	@echo -e "  $(GREEN)make install$(RESET)              - Install backend dependencies"
@@ -37,9 +39,16 @@ help:
 	@echo -e "  $(GREEN)make docker-down$(RESET)          - Stop and remove containers/images"
 	@echo -e "       Example: make docker-down"
 	@echo -e "       Example: make docker-down services=portainer profile=prod"
+	@echo -e ""
+	@echo -e "$(YELLOW)Env file encryption:$(RESET)"
+	@echo -e "  $(GREEN)make encrypt-env name=.env$(RESET)        - Encrypt .env to .env.gpg"
+	@echo -e "  $(GREEN)make decrypt-env name=.env$(RESET)        - Decrypt .env.gpg to .env"
 
-gpg -c .env
-gpg -d .env.gpg > .env
+encrypt-env:
+	@gpg -c $(name)
+
+decrypt-env:
+	@gpg -d $(name).gpg > $(name)
 
 git-commit:
 	git add --all && git commit -m"little changes" && git push
@@ -129,4 +138,4 @@ docker-down:
 		docker compose -f $(file) --project-name $(project) rm -fsv $(services); \
 	fi
 
-.PHONY: help install audit-fix start dev test-unit test-integra test-performance lint lint-fix format docs clean logs docker-clean docker-up docker-down
+.PHONY: help install audit-fix start dev test-unit test-integra test-performance lint lint-fix format docs clean logs encrypt-env decrypt-env docker-clean docker-up docker-down
