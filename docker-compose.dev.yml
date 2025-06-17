@@ -13,8 +13,8 @@ services:
     container_name: promtail-dev
     restart: always
     volumes:
-      - ./backend/docker/promtail-config.yaml:/etc/promtail/config.yaml
-      - ./backend/logs:/var/log/backend
+      - ./docker/promtail-config.yaml:/etc/promtail/config.yaml
+      - ./logs:/var/log/backend
     command: -config.file=/etc/promtail/config.yaml
     depends_on:
       - loki
@@ -27,7 +27,7 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - ./backend/docker/prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./docker/prometheus.yaml:/etc/prometheus/prometheus.yml
     restart: unless-stopped
     networks:
       - app-network
@@ -64,14 +64,14 @@ services:
     container_name: adminer-dev
     privileged: true
     ports:
-      - 82:8080
+      - 8081:8080
     networks:
       - app-network
 
   mysql:
     build:
       context: .
-      dockerfile: ./docker/mysql.dev.Dockerfile
+      dockerfile: ./docker/mysql.Dockerfile
     user: root
     restart: always
     container_name: mysql-dev
@@ -82,14 +82,14 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
-      - 3306:3306
+      - 3307:3306
     networks:
       - app-network
 
   neo4j:
     build:
       context: .
-      dockerfile: ./docker/neo4j.dev.Dockerfile
+      dockerfile: ./docker/neo4j.Dockerfile
     user: root
     restart: always
     container_name: neo4j-dev
@@ -116,9 +116,12 @@ services:
       - mysql
       - neo4j
     volumes:
-      - ./backend/src:/usr/src/app/src
+      - ./src:/usr/src/app/src
+    env_file:
+      - .env
     networks:
       - app-network
+
 
 volumes:
   portainer_data:

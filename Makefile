@@ -9,7 +9,7 @@ BACKEND_DIR := .
 LOGS_DIR := logs
 DOCKER_IMAGE := my-node-app
 
-file ?= ../docker-compose.dev.yml
+file ?= docker-compose.dev.yml
 project ?= air_book
 profile ?= dev
 services ?= all

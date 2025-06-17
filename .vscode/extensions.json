@@ -6,7 +6,7 @@
     "pkief.material-icon-theme",                  // Material Icon Theme
     "ms-vscode-remote.remote-wsl",                // WSL support
     "tamasfe.even-better-toml",                   // TOML support
-    "ritwickdey.liveserver",                      // Live Server (poprawna nazwa rozszerzenia)
+    "ritwickdey.liveserver",                      // Live Server
 
     // === Python Development ===
     "ms-python.python",                           // Python support
@@ -17,7 +17,7 @@
     "ms-python.flake8",                           // Flake8 linter support
     "ms-toolsai.jupyter",                         // Jupyter notebook support
     "njqdev.vscode-python-typehint",              // Python type hint suggestions
-    "josemurilloc.aura-spirit-dracula",           // Theme with Python support (jeśli to zamierzone)
+    "josemurilloc.aura-spirit-dracula",           // Theme with Python support
 
     // === Node.js & Web Development ===
     "dbaeumer.vscode-eslint",                     // ESLint
@@ -30,6 +30,9 @@
     "orta.vscode-jest",                           // Jest test runner
 
     // === Narzędzia uniwersalne ===
-    "formulahendry.code-runner"                   // Code Runner (run code snippets)
+    "formulahendry.code-runner",                  // Code Runner (run code snippets)
+
+    // === Postman ===
+    "postman.postman-for-vscode"                  // Postman for VSCode
   ]
 }

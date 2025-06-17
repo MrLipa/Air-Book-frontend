@@ -1,4 +1,5 @@
 const { pool, session } = require('../config/db');
+require('dotenv').config();
 
 const checkRelationalDatabase = async (req, res) => {
   try {

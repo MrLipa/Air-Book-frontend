@@ -12,15 +12,12 @@ const loginUser = async (req, res) => {
 
   try {
     const [foundUserQuery] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
-
     if (foundUserQuery.length === 0) {
       return res.status(401).json({ code: 401, message: 'Invalid email or password.' });
     }
 
     const user = foundUserQuery[0];
-
     const match = await bcrypt.compare(password, user.password);
-
     if (!match) {
       return res.status(401).json({ code: 401, message: 'Invalid email or password.' });
     }
@@ -41,13 +38,11 @@ const loginUser = async (req, res) => {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     });
 
-    const [existingToken] = await pool.execute('SELECT * FROM tokens WHERE user_id = ?', [user.id]);
+    await pool.execute('DELETE FROM tokens WHERE user_id = ?', [user.id]);
 
-    if (existingToken.length === 0) {
-      await pool.execute('INSERT INTO tokens (id, user_id, refresh_token) VALUES (UUID(), ?, ?)', [user.id, refreshToken]);
-    } else {
-      await pool.execute('UPDATE tokens SET refresh_token = ? WHERE user_id = ?', [refreshToken, user.id]);
-    }
+    const expiresAt = new Date(Date.now() + process.env.REFRESH_TOKEN_EXPIRY);
+
+    await pool.execute('INSERT INTO tokens (id, user_id, refresh_token, expires_at) VALUES (?, ?, ?, ?)', [uuidv4(), user.id, refreshToken, expiresAt]);
 
     res.cookie('jwt', refreshToken, {
       httpOnly: true,
