@@ -13,7 +13,7 @@ const verifyJwt = (req, res, next) => {
   }
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    return res.status(403).json({ message: 'Missing or malformed token' });
+    return res.status(401).json({ message: 'Missing or malformed token' });
   }
 
   const token = authorization.split(' ')[1];

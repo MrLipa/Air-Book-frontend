@@ -3,7 +3,7 @@ const { pool } = require('../config/db');
 const { registerSchema } = require('../validations/userValidation');
 const { v4: uuidv4 } = require('uuid');
 
-const registerNewUser = async (req, res) => {
+const registerUser = async (req, res) => {
   try {
     const { error, value } = registerSchema.validate(req.body);
 
@@ -35,5 +35,5 @@ const registerNewUser = async (req, res) => {
 };
 
 module.exports = {
-  registerNewUser,
+  registerUser,
 };

@@ -12,7 +12,7 @@ DOCKER_IMAGE := my-node-app
 file ?= docker-compose.dev.yml
 project ?= air_book
 profile ?= dev
-services ?= all
+services ?=
 nc ?= false
 
 name ?= .env
@@ -24,7 +24,7 @@ help:
 	@echo -e "  $(GREEN)make start$(RESET)                - Start backend (production mode)"
 	@echo -e "  $(GREEN)make dev$(RESET)                  - Start backend (development mode)"
 	@echo -e "  $(GREEN)make test-unit$(RESET)            - Run unit tests"
-	@echo -e "  $(GREEN)make test-integra$(RESET)         - Run integration tests (mocha)"
+	@echo -e "  $(GREEN)make test-integration$(RESET)         - Run integration tests (mocha)"
 	@echo -e "  $(GREEN)make test-performance$(RESET)     - Run performance tests (k6)"
 	@echo -e "  $(GREEN)make lint$(RESET)                 - Lint code"
 	@echo -e "  $(GREEN)make lint-fix$(RESET)             - Lint code and auto-fix issues"
@@ -68,8 +68,8 @@ dev:
 test-unit:
 	npm run test:unit
 
-test-integra:
-	npm run test:integra
+test-integration:
+	npm run test:integration
 
 test-performance:
 	npm run test:performance
@@ -93,7 +93,6 @@ clean:
 	git clean -fdx
 
 docker-clean:
-	@echo -e "$(GREEN)Cleaning all Docker containers, images, volumes, and networks...$(RESET)"
 	-docker rm -f $$(docker ps -aq) 2>/dev/null || true
 	-docker rmi -f $$(docker images -q) 2>/dev/null || true
 	-docker volume prune -f

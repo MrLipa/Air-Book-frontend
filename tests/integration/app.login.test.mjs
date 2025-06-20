@@ -1,6 +1,8 @@
 import request from 'supertest';
 import { expect } from 'chai';
-import app from '../../app.js';
+import app from '../../src/app.js';
+import './setup.mjs';
+const { pool } = await import('../../src/config/db.js');
 
 describe('POST /login', () => {
   const testUser = {
@@ -18,9 +20,10 @@ describe('POST /login', () => {
     });
 
     expect(res.status).to.equal(200);
-    expect(res.body).to.have.property('accessToken');
+    expect(res.body).to.have.property('accessToken').that.is.a('string');
     expect(res.body).to.have.property('userId');
     expect(res.body).to.have.property('role');
+    expect(res.body.message).to.include('Login successful');
     expect(res.headers['set-cookie']).to.exist;
   });
 
@@ -38,6 +41,13 @@ describe('POST /login', () => {
     expect(res.body.message).to.include('required');
   });
 
+  it('❌ should return 400 if both fields are missing', async () => {
+    const res = await request(app).post('/login').send({});
+
+    expect(res.status).to.equal(400);
+    expect(res.body.message).to.include('required');
+  });
+
   it('❌ should return 401 if email is incorrect', async () => {
     const res = await request(app).post('/login').send({
       email: 'wrong@example.com',
@@ -45,6 +55,7 @@ describe('POST /login', () => {
     });
 
     expect(res.status).to.equal(401);
+    expect(res.body.message).to.include('Invalid email or password');
   });
 
   it('❌ should return 401 if password is incorrect', async () => {
@@ -54,5 +65,21 @@ describe('POST /login', () => {
     });
 
     expect(res.status).to.equal(401);
+    expect(res.body.message).to.include('Invalid email or password');
+  });
+
+  it('❌ should return 500 on server error', async () => {
+    const origExecute = pool.execute;
+    pool.execute = () => { throw new Error('DB fail'); };
+
+    const res = await request(app).post('/login').send({
+      email: testUser.email,
+      password: testUser.password,
+    });
+
+    expect(res.status).to.equal(500);
+    expect(res.body).to.have.property('message');
+
+    pool.execute = origExecute;
   });
 });

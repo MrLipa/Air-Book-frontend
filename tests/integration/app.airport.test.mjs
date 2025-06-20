@@ -1,7 +1,8 @@
 import request from 'supertest';
 import { expect } from 'chai';
-import app from '../../app.js';
-import pkg from '../../utils/generateToken.js';
+import app from '../../src/app.js';
+import pkg from '../../src/utils/generateToken.js';
+const { session } = await import('../../src/config/db.js');
 const { generateAccessToken } = pkg;
 
 const adminToken = generateAccessToken({
@@ -29,16 +30,16 @@ describe('GET /airport/getAllAirports', () => {
 
     airports.forEach((airport) => {
       expect(airport).to.be.an('object');
-      expect(airport).to.have.all.keys('airportId', 'city', 'country', 'image');
-      expect(airport.airportId).to.be.a('number');
+      expect(airport).to.have.all.keys('id', 'city', 'country', 'image');
+      expect(airport.id).to.be.a('string');
       expect(airport.city).to.be.a('string');
       expect(airport.country).to.be.a('string');
       expect(airport.image).to.be.a('string');
     });
   });
 
-  it('should return 403 if no token is provided', async () => {
-    const response = await request(app).get('/airport/getAllAirports').expect(403);
+  it('should return 401 if no token is provided', async () => {
+    const response = await request(app).get('/airport/getAllAirports').expect(401);
 
     expect(response.body).to.have.property('message', 'Missing or malformed token');
   });
@@ -59,5 +60,19 @@ describe('GET /airport/getAllAirports', () => {
       .expect(403);
 
     expect(response.body).to.have.property('message', 'Invalid or expired token');
+  });
+
+  it('should return 500 on server/database error', async () => {
+    const originalRun = session.run;
+    session.run = () => { throw new Error('Database is down'); };
+
+    const response = await request(app)
+      .get('/airport/getAllAirports')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .expect(500);
+
+    expect(response.body).to.have.property('error').that.is.a('string');
+
+    session.run = originalRun;
   });
 });

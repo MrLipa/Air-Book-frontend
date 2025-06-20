@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --legacy-watch src/server.js",
     "start": "node src/server.js",
-    "test:integra": "npx mocha --file tests/integration/setup.mjs 'tests/integration/**/*.test.mjs' --reporter mochawesome --reporter-options reportDir=logs,reportFilename=test-report",
+    "test:integration": "npx mocha --file tests/integration/setup.mjs 'tests/integration/**/*.test.mjs' --reporter mochawesome --reporter-options reportDir=logs,reportFilename=test-report",
     "test:performance": "k6 run tests/performance/main.test.js",
     "test:unit": "",
     "lint": "eslint .",
