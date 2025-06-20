@@ -69,4 +69,3 @@ CREATE (a)-[:Flight {
     class: row[7],
     free_seats: row[8]
 }]->(b);
-

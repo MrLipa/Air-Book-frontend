@@ -19,7 +19,14 @@
     "unit": "test",
     "monitoring": "resource",
     "postman": "resource",
-    "alembic": "resource"
+    "alembic": "resource",
+    "grafana": "resource",
+  },
+  "material-icon-theme.files.associations": {
+    ".env": "key",
+    ".env.production": "key",
+    ".env.docker": "key",
+    "*.gpg": "lock"
   },
   "material-icon-theme.hidesExplorerArrows": true,
 
@@ -38,6 +45,8 @@
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
   "files.insertFinalNewline": true,
+  "files.eol": "\n",
+  "files.encoding": "utf8",
 
   // === File Explorer ===
   "explorer.confirmDelete": false,

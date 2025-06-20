@@ -54,58 +54,43 @@ git-commit:
 	git add --all && git commit -m"little changes" && git push
 
 install:
-	@echo -e "$(GREEN)Installing backend dependencies...$(RESET)"
 	npm install
 
 audit-fix:
-	@echo -e "$(GREEN)Running npm audit fix with --force...$(RESET)"
 	npm audit fix --force
 
 start:
-	@echo -e "$(GREEN)Starting backend in production mode...$(RESET)"
 	npm run start
 
 dev:
-	@echo -e "$(GREEN)Starting backend in development mode...$(RESET)"
 	npm run dev
 
 test-unit:
-	@echo -e "$(GREEN)Running unit tests...$(RESET)"
 	npm run test:unit
 
 test-integra:
-	@echo -e "$(GREEN)Running integration tests...$(RESET)"
 	npm run test:integra
 
 test-performance:
-	@echo -e "$(GREEN)Running performance tests...$(RESET)"
 	npm run test:performance
 
 lint:
-	@echo -e "$(GREEN)Linting code...$(RESET)"
 	npm run lint
 
 lint-fix:
-	@echo -e "$(GREEN)Linting and fixing code...$(RESET)"
 	npm run lint:fix
 
 format:
-	@echo -e "$(GREEN)Formatting code with Prettier...$(RESET)"
 	npm run format
 
 docs:
-	@echo -e "$(GREEN)Generating documentation with TypeDoc...$(RESET)"
 	npm run docs
 
 logs:
-	@echo -e "$(GREEN)Tailing application logs...$(RESET)"
 	tail -f $(LOGS_DIR)/*.log
 
 clean:
-	@echo -e "$(GREEN)Cleaning temporary files, caches, and logs...$(RESET)"
-	find . -type d -name '__pycache__' -exec rm -r {} + 2>/dev/null || true
-	find . -type f -name '*.log' -delete
-	rm -rf $(LOGS_DIR)/* 2>/dev/null || true
+	git clean -fdx
 
 docker-clean:
 	@echo -e "$(GREEN)Cleaning all Docker containers, images, volumes, and networks...$(RESET)"
@@ -115,27 +100,30 @@ docker-clean:
 	-docker network prune -f
 
 docker-up:
-	@echo -e "$(GREEN)Starting Docker build and up...$(RESET)"
-	@if [ "$(services)" = "all" ]; then \
-		SVCS=""; \
+	@if [ "$(nc)" = "true" ]; then \
+		COMPOSE_BAKE=true docker compose -f $(file) --project-name $(project) --profile $(profile) build --no-cache $(services); \
 	else \
-		SVCS="$(services)"; \
+		docker compose -f $(file) --project-name $(project) --profile $(profile) build $(services); \
 	fi; \
-	if [ "$(nc)" = "true" ]; then \
-		COMPOSE_BAKE=true docker compose -f $(file) --project-name $(project) --profile $(profile) build --no-cache $$SVCS; \
+	docker compose -f $(file) --project-name $(project) --profile $(profile) up -d $(services)
+
+docker-reset:
+	@docker compose -f $(file) --project-name $(project) --profile $(profile) stop $(services)
+	@docker compose -f $(file) --project-name $(project) --profile $(profile) rm -fsv $(services)
+	@IMAGES=$$(docker compose -f $(file) --project-name $(project) --profile $(profile) images -q $(services) | grep -v "^$$"); \
+	if [ -n "$$IMAGES" ]; then docker rmi $$IMAGES; fi
+	@docker volume prune -f
+	@if [ "$(nc)" = "true" ]; then \
+		COMPOSE_BAKE=true docker compose -f $(file) --project-name $(project) --profile $(profile) build --no-cache $(services); \
 	else \
-		docker compose -f $(file) --project-name $(project) --profile $(profile) build $$SVCS; \
-	fi; \
-	docker compose -f $(file) --project-name $(project) --profile $(profile) up -d $$SVCS; \
-	echo -e "$(GREEN)Docker containers are up and running.$(RESET)"
+		docker compose -f $(file) --project-name $(project) --profile $(profile) build $(services); \
+	fi
+	@docker compose -f $(file) --project-name $(project) --profile $(profile) up -d $(services)
 
 docker-down:
-	@echo -e "$(GREEN)Stopping and removing Docker containers/images...$(RESET)"
-	@if [ "$(services)" = "all" ]; then \
-		docker compose -f $(file) --project-name $(project) --profile $(profile) down --volumes --rmi all; \
-	else \
-		docker compose -f $(file) --project-name $(project) --profile $(profile) stop $(services); \
-		docker compose -f $(file) --project-name $(project) rm -fsv $(services); \
-	fi
+	@docker compose -f $(file) --project-name $(project) --profile $(profile) stop $(services)
+	@docker compose -f $(file) --project-name $(project) --profile $(profile) rm -fsv $(services)
+	@IMAGES=$$(docker compose -f $(file) --project-name $(project) --profile $(profile) images -q $(services) | grep -v "^$$"); \
+	if [ -n "$$IMAGES" ]; then docker rmi $$IMAGES; fi
 
 .PHONY: help install audit-fix start dev test-unit test-integra test-performance lint lint-fix format docs clean logs encrypt-env decrypt-env docker-clean docker-up docker-down

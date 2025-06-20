@@ -669,7 +669,7 @@
 					"response": []
 				},
 				{
-					"name": "/flight/patchFlightById/flightId",
+					"name": "/flight/patchFlightById/:flightId",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -723,6 +723,148 @@
 							],
 							"path": [
 								"metrics"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "oauth2",
+			"item": [
+				{
+					"name": "/api/auth/facebook/callback",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cityFrom\": \"\",\n  \"cityTo\": \"Shanghai\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/facebook/callback",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"facebook",
+								"callback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/linkedin/callback",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cityFrom\": \"\",\n  \"cityTo\": \"Shanghai\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/linkedin/callback",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"linkedin",
+								"callback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/github/callback",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cityFrom\": \"\",\n  \"cityTo\": \"Shanghai\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/github/callback",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"github",
+								"callback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/azure/callback",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cityFrom\": \"\",\n  \"cityTo\": \"Shanghai\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/azure/callback",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"azure",
+								"callback"
 							]
 						}
 					},

@@ -15,4 +15,10 @@ scrape_configs:
           - localhost
         labels:
           job: backend
-          __path__: /var/log/backend/node.log
+          __path__: /var/log/backend/app-*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            level:
+      - labels:
+          level:

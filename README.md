@@ -1,3 +1,62 @@
+wszystkie requesty
+wszystkie 500 400 300200 100
+timeseires liczba uzytkowników
+ogólne zużycie memrory w czasie
+cpu
+time series bar podział na get i inne
+
+
+
+get latency
+patch latency
+...
+itd
+requests bar
+memoery usage
+cpu usage
+database latancy
+number of users
+liczniki ogaólen 100 200 4003000 500
+
+
+
+![alt text](image.png)
+
+
+
+Dashboard mysql
+
+logi mysql
+general slow i error
+
+liczba poąłczeń do bazy danych
+thread activity
+liczba zapytań do bazy danych podział na select update delete patch oraz ile trwaja
+CPU Usage (jeśli masz Prometheus Node Exporter)
+
+Active Connections (current_connections)
+
+QPS (Queries per second)
+
+Query Time (average, slowest)
+
+Slow Queries Count
+
+Table Locks/Deadlocks
+
+Buffer Pool Size/Usage
+
+InnoDB row operations (insert/update/delete/read)
+
+Replication Lag (jeśli masz replikację)
+
+Temporary Tables Created
+
+Uptime
+
+
+
+
 # Air-Book-backend
 
 ## Getting started

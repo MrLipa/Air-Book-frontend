@@ -7,6 +7,8 @@
     "ms-vscode-remote.remote-wsl",                // WSL support
     "tamasfe.even-better-toml",                   // TOML support
     "ritwickdey.liveserver",                      // Live Server
+    "formulahendry.code-runner",                  // Code Runner (run code snippets)
+    "postman.postman-for-vscode",                 // Postman for VSCode
 
     // === Python Development ===
     "ms-python.python",                           // Python support
@@ -28,11 +30,5 @@
     "ecmel.vscode-html-css",                      // HTML/CSS IntelliSense
     "eg2.vscode-npm-script",                      // npm script IntelliSense
     "orta.vscode-jest",                           // Jest test runner
-
-    // === Narzędzia uniwersalne ===
-    "formulahendry.code-runner",                  // Code Runner (run code snippets)
-
-    // === Postman ===
-    "postman.postman-for-vscode"                  // Postman for VSCode
   ]
 }

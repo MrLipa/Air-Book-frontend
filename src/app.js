@@ -17,11 +17,6 @@ const credentials = require('./middlewares/credentials');
 const { requestLogger } = require('./middlewares/logger');
 const verifyJWT = require('./middlewares/verifyJWT');
 
-// Scheduled jobs
-const cron = require('node-cron');
-const clearOldLogs = require('./jobs/clearOldLogs.job');
-cron.schedule('0 0 * * *', clearOldLogs);
-
 // Express App
 const app = express();
 

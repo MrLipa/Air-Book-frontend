@@ -1,4 +1,5 @@
 const { session } = require('../config/db');
+const { logger } = require('../middlewares/logger');
 require('dotenv').config();
 
 const getAllAirports = async (req, res) => {
@@ -11,9 +12,12 @@ const getAllAirports = async (req, res) => {
       country: record.get('country'),
       image: record.get('image'),
     }));
+    logger.info('11111');
+    logger.debug('11111');
+    logger.error('11111');
+    logger.warn('11111');
     res.status(200).json(airports);
   } catch (err) {
-    logger.error('Failed to fetch airports:', err);
     res.status(500).json({ error: err.message });
   }
 };

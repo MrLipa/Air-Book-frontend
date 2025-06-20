@@ -14,7 +14,7 @@ export default defineConfig([
     rules: {
       semi: ['error', 'always'],
       quotes: ['error', 'double'],
-      "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }], // <-- tylko ta linia!
+      "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
       'no-console': 'off',
       'max-len': ['warn', { code: 100 }],
       indent: ['error', 2],

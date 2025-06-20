@@ -6,7 +6,6 @@ COPY package*.json ./
 RUN npm install
 
 COPY src ./src
-COPY server.js .
 COPY tsconfig.json .
 
 EXPOSE 3000

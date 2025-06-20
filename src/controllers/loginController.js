@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const { pool } = require('../config/db');
 const jwt = require('jsonwebtoken');
+const { v4: uuidv4 } = require('uuid');
+const { usersOnline } = require('../monitoring/metrics');
 require('dotenv').config();
 
 const loginUser = async (req, res) => {
@@ -30,19 +32,25 @@ const loginUser = async (req, res) => {
       },
     };
 
+    const accessExpiry = parseInt(process.env.ACCESS_TOKEN_EXPIRY);
+    const refreshExpiry = parseInt(process.env.REFRESH_TOKEN_EXPIRY);
+
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+      expiresIn: accessExpiry,
     });
 
     const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+      expiresIn: refreshExpiry,
     });
 
     await pool.execute('DELETE FROM tokens WHERE user_id = ?', [user.id]);
 
-    const expiresAt = new Date(Date.now() + process.env.REFRESH_TOKEN_EXPIRY);
+    const expiresAt = new Date(Date.now() + refreshExpiry);
 
-    await pool.execute('INSERT INTO tokens (id, user_id, refresh_token, expires_at) VALUES (?, ?, ?, ?)', [uuidv4(), user.id, refreshToken, expiresAt]);
+    await pool.execute(
+      'INSERT INTO tokens (id, user_id, refresh_token, expires_at) VALUES (?, ?, ?, ?)',
+      [uuidv4(), user.id, refreshToken, expiresAt]
+    );
 
     res.cookie('jwt', refreshToken, {
       httpOnly: true,
@@ -50,6 +58,8 @@ const loginUser = async (req, res) => {
       sameSite: 'None',
       maxAge: parseInt(process.env.COOKIE_MAX_AGE),
     });
+
+    usersOnline.inc();
 
     return res.status(200).json({
       code: 200,
