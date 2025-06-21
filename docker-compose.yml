@@ -1,7 +1,9 @@
 services:
   loki:
     image: grafana/loki:3.4.4
+    user: root
     restart: always
+    privileged: true
     ports:
       - "127.0.0.1:3100:3100"
     networks:
@@ -9,7 +11,9 @@ services:
 
   promtail:
     image: grafana/promtail:3.4.4
+    user: root
     restart: always
+    privileged: true
     volumes:
       - ./docker/promtail-config.yaml:/etc/promtail/config.yaml
       - ./logs:/var/log/backend
@@ -21,16 +25,21 @@ services:
 
   prometheus:
     image: prom/prometheus
+    user: root
+    restart: always
+    privileged: true
     ports:
       - "127.0.0.1:9090:9090"
     volumes:
       - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    restart: unless-stopped
     networks:
       - app-network
 
   influxdb:
     image: influxdb:1.11.8
+    user: root
+    restart: always
+    privileged: true
     ports:
       - "127.0.0.1:8086:8086"
     environment:
@@ -51,7 +60,9 @@ services:
 
   grafana:
     image: grafana/grafana:12.0.2
+    user: root
     restart: always
+    privileged: true
     ports:
       - "127.0.0.1:3001:3000"
     env_file:
@@ -78,6 +89,7 @@ services:
 
   adminer:
     image: adminer:5.3.0
+    user: root
     restart: always
     privileged: true
     ports:
