@@ -45,10 +45,10 @@ help:
 	@echo -e "  $(GREEN)make decrypt-env name=.env$(RESET)        - Decrypt .env.gpg to .env"
 
 encrypt-env:
-	@gpg -c $(name)
+	tar czvf env.tar.gz .env/ && gpg -c env.tar.gz && rm env.tar.gz
 
 decrypt-env:
-	@gpg -d $(name).gpg > $(name)
+	gpg -d env.tar.gz.gpg > env.tar.gz && tar xzvf env.tar.gz && rm env.tar.gz
 
 git-commit:
 	git add --all && git commit -m"little changes" && git push
