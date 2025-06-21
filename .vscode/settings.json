@@ -21,6 +21,8 @@
     "postman": "resource",
     "alembic": "resource",
     "grafana": "resource",
+    "k6": "resource",
+    "dashboards": "resource",
   },
   "material-icon-theme.files.associations": {
     ".env": "key",

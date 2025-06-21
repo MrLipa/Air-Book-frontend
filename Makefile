@@ -9,7 +9,7 @@ BACKEND_DIR := .
 LOGS_DIR := logs
 DOCKER_IMAGE := my-node-app
 
-file ?= docker-compose.dev.yml
+file ?= docker-compose.yml
 project ?= air_book
 profile ?= dev
 services ?=
@@ -71,8 +71,15 @@ test-unit:
 test-integration:
 	npm run test:integration
 
-test-performance:
-	npm run test:performance
+# test-k6:
+# docker build -t k6-influxdb2 -f ./docker/k6.Dockerfile .
+# docker run --rm \
+#   -v "$PWD/tests/k6:/scripts" \
+#   --network air_book_app-network \
+#   k6-influxdb2 \
+#   run /scripts/test.js \
+#   --out xk6-influxdb=http://influxdb:8086?org=k6org&bucket=k6&token=admintoken
+# 	docker run --rm -v "$PWD/tests/k6:/scripts" --network air_book_app-network grafana/k6:latest run /scripts/test.js --out influxdb=http://influxdb:8086/k6?org=k6org&bucket=k6&token=admintoken
 
 lint:
 	npm run lint
