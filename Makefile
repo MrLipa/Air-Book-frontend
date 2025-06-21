@@ -71,15 +71,8 @@ test-unit:
 test-integration:
 	npm run test:integration
 
-# test-k6:
-# docker build -t k6-influxdb2 -f ./docker/k6.Dockerfile .
-# docker run --rm \
-#   -v "$PWD/tests/k6:/scripts" \
-#   --network air_book_app-network \
-#   k6-influxdb2 \
-#   run /scripts/test.js \
-#   --out xk6-influxdb=http://influxdb:8086?org=k6org&bucket=k6&token=admintoken
-# 	docker run --rm -v "$PWD/tests/k6:/scripts" --network air_book_app-network grafana/k6:latest run /scripts/test.js --out influxdb=http://influxdb:8086/k6?org=k6org&bucket=k6&token=admintoken
+test-k6:
+	docker compose -f docker-compose.yml --project-name air_book run --rm k6 run /scripts/test.js
 
 lint:
 	npm run lint

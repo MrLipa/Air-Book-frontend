@@ -13,7 +13,7 @@ datasources:
     jsonData:
       maxLines: 1000
 
-  - name: k6influxdb
+  - name: DS_INFLUXDB
     type: influxdb
     access: proxy
     database: k6
