@@ -2,6 +2,8 @@ const neo4j = require('neo4j-driver');
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USERNAME,
@@ -11,7 +13,7 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   ssl: {
-    rejectUnauthorized: true,
+    rejectUnauthorized: isProduction,
   },
 });
 

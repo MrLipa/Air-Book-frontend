@@ -45,7 +45,7 @@ const refreshToken = async (req, res) => {
           },
         },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: Math.floor(refreshExpiry / 1000) }
+        { expiresIn: refreshExpiry }
       );
 
       const expiresAt = new Date(Date.now() + refreshExpiry);
@@ -60,7 +60,7 @@ const refreshToken = async (req, res) => {
           },
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: Math.floor(accessExpiry / 1000) }
+        { expiresIn: accessExpiry }
       );
 
       res.cookie('jwt', newRefreshToken, {
