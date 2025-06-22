@@ -50,7 +50,7 @@ encrypt-env:
 decrypt-env:
 	gpg -d env.tar.gz.gpg > env.tar.gz && tar xzvf env.tar.gz && rm env.tar.gz
 
-git-commit:
+git:
 	git add --all && git commit -m"little changes" && git push
 
 install:
