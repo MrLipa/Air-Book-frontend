@@ -5,3 +5,9 @@ hello_world:
   stage: hello
   script:
     - echo "Hello World"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "node-version"'
+      when: always
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "node-version"'
+      when: always
+    - when: manual  # pozwala na ręczne odpalenie
