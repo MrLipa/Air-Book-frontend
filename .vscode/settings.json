@@ -38,7 +38,7 @@
   "editor.fontLigatures": true,
   "editor.lineHeight": 22,
   "editor.tabSize": 4,
-  "editor.wordWrap": "on",
+  "editor.wordWrap": "off",
   "editor.fontWeight": "normal",
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.minimap.enabled": false,

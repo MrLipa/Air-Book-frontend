@@ -1,8 +1,7 @@
 SET @user_id := UUID();
 
-INSERT INTO users (
-  id, first_name, last_name, email, password, image, phone, address, description, role
-) VALUES (
+LOCK TABLES `users` WRITE;
+INSERT INTO `users` VALUES (
   @user_id,
   'Xavier',
   'Venkatanarasimha',
@@ -14,10 +13,13 @@ INSERT INTO users (
   'Hi, I''m Xavier, your average guy from Earth. You might know me as a meme maker and comedian. I work at a gas station, although for the life of me, I can''t pinpoint its location. Just know it''s somewhere on Earth! I''m also a married man, though my wife seems to think I have a few girlfriends on the side. But you know, wives know everything.',
   'admin'
 );
+UNLOCK TABLES;
 
-INSERT INTO notifications (id, user_id, message, created_at) VALUES
+LOCK TABLES `notifications` WRITE;
+INSERT INTO `notifications` VALUES
   (UUID(), @user_id, 'Your flight reservation to Berlin has been confirmed.', '2010-04-10 00:00:00'),
   (UUID(), @user_id, 'New promotion: 10% discount on domestic flights!', '2010-04-10 01:00:00'),
   (UUID(), @user_id, 'Your flight to London has been delayed by 30 minutes.', '2010-04-10 02:00:00'),
   (UUID(), @user_id, 'Payment confirmation for reservation no. #1321.', '2010-04-10 03:00:00'),
   (UUID(), @user_id, 'New feature: online check-in is now available!', '2010-04-10 04:00:00');
+UNLOCK TABLES;
