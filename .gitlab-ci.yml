@@ -12,6 +12,7 @@ unit_tests:
   script:
     - echo "Hello World!"
     - echo $COSTAM
+    - source $variables
     - echo $MYSQL_ROOT_PASSWORD
     - echo "================================"
     - npm ci
