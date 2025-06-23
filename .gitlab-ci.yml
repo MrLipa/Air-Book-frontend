@@ -7,17 +7,10 @@ cache:
   paths:
     - node_modules/
 
-variables:
-  MYSQL_ROOT_PASSWORD: root
-  MYSQL_USER: user
-  MYSQL_PASSWORD: user
-  MYSQL_DATABASE: air_book
-
 unit_tests:
   stage: test
   script:
     - echo "Hello World!"
-    - echo "=== Zmienne środowiskowe ==="
     - echo $MYSQL_ROOT_PASSWORD
     - echo "================================"
     - npm ci
