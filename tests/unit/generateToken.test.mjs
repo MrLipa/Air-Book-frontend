@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import { expect } from 'chai';
 import { generateAccessToken } from '../../src/utils/generateToken.js';
 import jwt from 'jsonwebtoken';

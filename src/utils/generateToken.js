@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 function generateAccessToken(userPayload) {
   const accessExpiry = parseInt(process.env.ACCESS_TOKEN_EXPIRY);
