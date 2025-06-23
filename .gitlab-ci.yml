@@ -1,5 +1,4 @@
 stages:
-  - setup
   - test
   - security_scan
   - deploy
@@ -10,17 +9,11 @@ cache:
   paths:
     - node_modules/
 
-setup:
-  stage: setup
-  script:
-    - echo "Loading environment variables..."
-    - source $variables
-    - echo "MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD"
-
 unit_tests:
   stage: test
   script:
     - echo "Running unit tests..."
+    - source $variables
     - echo "MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD"
     - make test-unit
 
