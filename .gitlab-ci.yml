@@ -1,16 +1,39 @@
 stages:
+  - setup
   - test
+  - security_scan
+  - deploy
 
-image: node:20
+image: node:24
 
 cache:
   paths:
     - node_modules/
 
+setup:
+  stage: setup
+  script:
+    - echo "Loading environment variables..."
+    - source $variables
+    - echo "MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD"
+
 unit_tests:
   stage: test
   script:
-    - echo "Hello World!"
-    - echo $COSTAM
-    - source $variables
-    - echo $MYSQL_ROOT_PASSWORD
+    - echo "Running unit tests..."
+    - make tests:unit
+
+security_scan:
+  stage: security_scan
+  script:
+    - echo "Scanning for security vulnerabilities..."
+    - npm audit
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to Azure..."
+    - az login --service-principal -u $AZURE_USERNAME -p $AZURE_PASSWORD --tenant $AZURE_TENANT_ID
+    - az webapp deployment source config-zip -g $AZURE_RESOURCE_GROUP -n $AZURE_APP_NAME --src ./build.zip
+  only:
+    - master
