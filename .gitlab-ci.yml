@@ -11,7 +11,7 @@ unit_tests:
   stage: test
   script:
     - echo "Hello World!"
-    - echo $MYSQL_ROOT_PASSWORD
+    - echo $COSTAM
     - echo "================================"
     - npm ci
     - make test-unit
