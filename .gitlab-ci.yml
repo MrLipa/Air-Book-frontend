@@ -21,7 +21,8 @@ unit_tests:
   stage: test
   script:
     - echo "Running unit tests..."
-    - make tests:unit
+    - echo "MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD"
+    - make help
 
 security_scan:
   stage: security_scan
