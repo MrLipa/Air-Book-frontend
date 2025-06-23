@@ -14,8 +14,11 @@ unit_tests:
   script:
     - echo "Running unit tests..."
     - source $env
-    - echo "MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD"
-    - make test-unit
+    - echo $ACCESS_TOKEN_SECRET
+    - echo $ACCESS_TOKEN_EXPIRY
+    - echo $REFRESH_TOKEN_SECRET
+    - echo $REFRESH_TOKEN_EXPIRY
+    - npm run test:unit
 
 security_scan:
   stage: security_scan
