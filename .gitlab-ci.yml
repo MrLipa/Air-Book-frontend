@@ -13,7 +13,7 @@ unit_tests:
   stage: test
   script:
     - echo "Running unit tests..."
-    - source $variables
+    - source $env
     - echo "MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD"
     - make test-unit
 
