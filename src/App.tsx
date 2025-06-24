@@ -14,7 +14,7 @@ const queryClient = new QueryClient();
 
 function App() {
   useEffect(() => {
-    document.title = import.meta.env.VITE_AIR_BOOK_NAME || "Air Book";
+    document.title = import.meta.env.VITE_AIR_BOOK_NAME || "";
   }, []);
 
   return (
