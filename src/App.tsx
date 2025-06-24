@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -12,6 +13,10 @@ import "@/styles/global.css";
 const queryClient = new QueryClient();
 
 function App() {
+  useEffect(() => {
+    document.title = import.meta.env.VITE_AIR_BOOK_NAME || "Air Book";
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
