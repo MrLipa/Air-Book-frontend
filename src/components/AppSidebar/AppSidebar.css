@@ -1,0 +1,25 @@
+.sidebar-flex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-brand-wrapper {
+  margin-top: 18px;
+}
+
+.sidebar-nav-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sidebar-avatar-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}

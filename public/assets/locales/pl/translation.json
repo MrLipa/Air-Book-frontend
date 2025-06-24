@@ -1,0 +1,123 @@
+{
+    "Home_Title": "Podróżuj z maksymalnym komfortem",
+    "Home_Description": "Znajdź najlepsze oferty podróży i zarezerwuj wymarzony wyjazd.",
+    "Home_Placeholder_From": "Z",
+    "Home_Placeholder_To": "Do",
+    "Home_Class_Economy": "Klasa ekonomiczna",
+    "Home_Class_Premium": "Klasa premium",
+    "Home_Class_Business": "Klasa biznesowa",
+    "Home_Search": "Szukaj",
+  
+    "FlightCard_Date": "Data",
+    "FlightCard_Price": "Cena",
+    "FlightCard_Currency": "PLN",
+  
+    "Navbar_Brand": "Air Book",
+    "Navbar_Home": "Strona główna",
+    "Navbar_Help": "Pomoc",
+    "Navbar_Login": "Zaloguj się",
+    "Navbar_Register": "Zarejestruj się",
+  
+    "Footer_Brand": "Air Book",
+    "Footer_Introduce": "AirBook to platforma internetowa, która umożliwia klientom łatwe rezerwowanie biletów lotniczych, przeglądanie informacji o lotach oraz planowanie podróży. Głównym celem AirBook jest zapewnienie użytkownikom wygodnego i intuicyjnego sposobu rezerwacji lotów oraz dostarczanie wyczerpujących informacji o lotach.",
+    "Footer_Contact": "Kontakt",
+    "Footer_Name": "Imię:",
+    "Footer_Email": "Email:",
+    "Footer_Phone": "Telefon:",
+    "Footer_Newsletter": "Newsletter",
+    "Footer_Subscribe": "Zapisz się do naszego biuletynu, aby otrzymywać najnowsze wiadomości i aktualizacje.",
+
+
+
+    "polish": "Polski",
+    "english": "Angielski",
+    "german": "Niemiecki",
+    "messageSettings": "Ustawienia wiadomości",
+    "selectNotifications": "Wybierz powiadomienia, które chcesz otrzymać",
+    "theme": "Motyw",
+    "darkTheme": "Ciemny motyw",
+    "language": "Język",
+    "selectLanguage": "Wybierz język",
+    "changeAvatar": "Zmień awatar",
+    "firstNamePlaceholder": "Imię",
+    "lastNamePlaceholder": "Nazwisko",
+    "emailPlaceholder": "Email",
+    "addressPlaceholder": "Adres",
+    "phonePlaceholder": "Telefon",
+    "passwordPlaceholder": "Hasło",
+    "saveChanges": "Zapisz zmiany",
+    "deleteUser": "Usuń konto",
+    "profileTab": "Profil",
+    "settingsTab": "Ustawienia",
+
+
+    
+    "Origin": "Początek",
+    "Destination": "Cel",
+    "Details": "Szczegóły",
+    "Price": "Cena",
+    "Date": "Data",
+    "Duration": "Czas trwania",
+    "Airline": "Linia lotnicza",
+    "Class": "Klasa",
+    "Free Seats": "Wolne miejsca",
+    "Book": "Rezerwuj",
+
+
+
+    "Passenger": "Pasażer",
+    "Travel Details": "Szczegóły podróży",
+    "Destination": "Cel",
+    "Price": "Cena",
+    "Date": "Data",
+    "Full Name": "Imię i nazwisko",
+    "Email": "Email",
+    "Phone": "Telefon",
+    "Address": "Adres",
+
+
+
+    "Business": "Biznesowa",
+    "First Class": "Pierwsza Klasa",
+    "Economy": "Ekonomiczna",
+    "Select One": "Wybierz jedną",
+    "Global Search": "Globalne wyszukiwanie",
+    "No flights found.": "Nie znaleziono lotów.",
+    "Shortest Path": "Najkrótsza ścieżka",
+    "From": "Z",
+    "To": "Do",
+    "Price": "Cena",
+    "Class": "Klasa",
+    "Search": "Szukaj",
+
+
+
+    "Theme": "Motyw",
+    "Logout": "Wyloguj się",
+
+
+
+    "Search": "Szukaj",
+
+
+
+    "Loading": "Ładowanie...",
+
+
+
+    "Air Book": "Air Book",
+    "Home": "Strona główna",
+    "Help": "Pomoc",
+    "Profile": "Profil",
+    "Search Flights": "Wyszukaj loty",
+    "Settings": "Ustawienia",
+    "Logout": "Wyloguj się",
+
+
+
+    "Polish": "Polski",
+    "English": "Angielski",
+    "German": "Niemiecki"
+
+}
+  

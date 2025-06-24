@@ -1,0 +1,7 @@
+.notification-popover {
+  background: green !important;
+  border-radius: 12px;
+  padding: 12px 8px;
+  color: #fff; /* Białe teksty w dymku, opcjonalnie */
+  /* Możesz dodać box-shadow lub inne rzeczy jeśli chcesz */
+}

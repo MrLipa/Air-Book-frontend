@@ -1,0 +1,61 @@
+.social-login-row {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s, color 0.2s;
+  width: 76px;
+  height: 76px;
+  cursor: pointer;
+}
+
+/* Facebook */
+.social-icon.facebook:hover {
+  background: #1877f3;
+}
+.social-icon.facebook:hover svg {
+  color: #fff;
+}
+
+/* Google */
+.social-icon.google:hover {
+  background: #fff;
+  border: 2px solid #dadada;
+}
+
+/* LinkedIn */
+.social-icon.linkedin:hover {
+  background: #0a66c2;
+}
+.social-icon.linkedin:hover svg {
+  color: #fff;
+}
+
+/* GitHub */
+.social-icon.github:hover {
+  background: #23272d;
+}
+.social-icon.github:hover svg {
+  color: #fff;
+}
+
+/* X (Twitter) - błękitny */
+.social-icon.x:hover {
+  background: #1da1f2;
+}
+.social-icon.x:hover svg {
+  color: #fff;
+}
+.social-icon.azure:hover {
+  background: #0089d6;   /* Azure blue */
+}
+.social-icon.azure:hover svg {
+  color: #fff;
+}

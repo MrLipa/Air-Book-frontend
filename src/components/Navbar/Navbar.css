@@ -1,0 +1,49 @@
+.ab-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 60px;
+
+  background-color: rgba(34, 34, 34, 0.4);
+  color: white;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ab-navbar-logo {
+  font-size: 28px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ab-navbar-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 30px;
+}
+
+.ab-navbar-item {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.ab-navbar-link {
+  text-decoration: none;
+  color: white;
+  transition: color 0.2s;
+}
+
+.ab-navbar-link:hover {
+  color: #ffcc00;
+}
